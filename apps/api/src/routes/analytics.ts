@@ -223,3 +223,12 @@ analyticsRouter.get('/dashboard/:stockDatasetId', asyncHandler(async (req, res) 
     notes: movementsId ? [] : ['Link a movements dataset to enable excess, turnover and consumption KPIs.'],
   });
 }));
+
+// Trend: headline KPIs across prior stock-dataset snapshots for the same
+// company/plant series, so the dashboard can chart direction of travel.
+analyticsRouter.get('/trend/:stockDatasetId', asyncHandler(async (req, res) => {
+  const stockId = intParam(req.params.stockDatasetId, 'stock dataset id');
+  await svc.requireDataset(stockId, 'stock');
+  const limit = Math.min(Math.max(optInt(req.query.limit) ?? 12, 2), 24);
+  res.json({ points: await svc.datasetTrend(stockId, limit) });
+}));

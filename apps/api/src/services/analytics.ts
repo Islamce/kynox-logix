@@ -33,6 +33,9 @@ export interface DatasetMeta {
   period_start: string | null;
   period_end: string | null;
   quality_scores: string | null;
+  tenant_id: string;
+  company: string | null;
+  plant_tag: string | null;
 }
 
 export async function requireDataset(id: number, kind?: string): Promise<DatasetMeta> {
@@ -642,4 +645,53 @@ export async function physicalInventoryAnalysis(datasetId: number) {
     negativeVariance: round(negative, 3),
     worstMaterials: worst,
   };
+}
+
+// ---------------------------------------------------------------------------
+// Trend: headline KPIs across a series of prior stock-dataset snapshots for
+// the same tenant, so the dashboard can show direction of travel rather than
+// a single point-in-time read. "Series" = same tenant + plant_tag + company
+// as the anchor dataset, ordered by period_end (falling back to created_at).
+// ---------------------------------------------------------------------------
+
+export interface TrendPoint {
+  datasetId: number;
+  name: string;
+  periodEnd: string | null;
+  createdAt: string;
+  totalValue: number;
+  totalMaterials: number;
+  healthScore: number | null;
+  criticalShortages: number;
+  shortageMaterials: number;
+}
+
+export async function datasetTrend(anchorStockDatasetId: number, limit = 12): Promise<TrendPoint[]> {
+  const anchor = await requireDataset(anchorStockDatasetId, 'stock');
+  const siblings = await db('datasets')
+    .where({ kind: 'stock', tenant_id: anchor.tenant_id, company: anchor.company, plant_tag: anchor.plant_tag })
+    .orderBy([{ column: 'period_end', order: 'desc' }, { column: 'created_at', order: 'desc' }])
+    .limit(limit)
+    .select('id', 'name', 'period_end', 'created_at');
+
+  // Oldest-first for a left-to-right trend chart.
+  const ordered = [...siblings].reverse();
+  const points: TrendPoint[] = [];
+  for (const s of ordered) {
+    const position = await inventoryPosition(s.id);
+    const shortage = await shortageAnalysis(s.id);
+    const health = await healthAnalysis(s.id);
+    points.push({
+      datasetId: s.id,
+      name: s.name,
+      periodEnd: s.period_end,
+      createdAt: s.created_at,
+      totalValue: position.totals.value,
+      totalMaterials: position.totals.materials,
+      healthScore: health.score,
+      criticalShortages: shortage.summary.critical,
+      shortageMaterials: shortage.summary.critical + shortage.summary.high + shortage.summary.medium,
+    });
+  }
+  return points;
 }
