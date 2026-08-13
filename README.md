@@ -1,10 +1,6 @@
-# Logix — Kynox Logistics Intelligence
+# KYNOX Logix — Logistics Operations & Orchestration
 
-An enterprise-grade, governed Supply Chain & Materials Intelligence platform:
-upload SAP/ERP/WMS/Excel/CSV data, get automatic report detection, smart column
-mapping, validation with approval-based cleansing, deterministic inventory
-analytics (ABC/XYZ, aging, excess, shortage, forecasting, planning proposals)
-and a governed AI insights layer — with full traceability and auditability.
+KYNOX Logix is an enterprise-grade **Logistics Operations, 3PL Management and future 4PL Orchestration Platform with embedded KYNOX intelligence**. It operates tenant-scoped providers, transport requirements, shipments, lifecycle milestones, logistics exceptions, POD metadata and freight operational context while retaining governed SAP/ERP/WMS/Excel/CSV ingestion, deterministic inventory/logistics intelligence and evidence-led AI interpretation.
 
 Deployed standalone at `https://logix.kynox.io`. It is isolated from
 `analytics.kynox.io`, `www.kynox.io`, and the production WMS.
@@ -19,8 +15,9 @@ kynox-logix/
 ├── packages/
 │   ├── shared-types/       Canonical data model, RBAC matrix, DTOs
 │   ├── analytics-engine/   Pure deterministic analytics (ABC, XYZ, aging, forecasting…)
-│   ├── data-quality/       Parsers, 14 validation rules, scoring, cleansing
-│   └── ai-engine/          Provider abstraction, 10 agents, orchestrator, governance
+│   ├── data-quality/       Parsers, validation rules, scoring, cleansing
+│   ├── logistics-engine/   Pure deterministic transport spend, provider-performance and risk functions
+│   └── ai-engine/          Provider abstraction, evidence interpretation and governance
 ├── docs/           Architecture, deployment, KPI dictionary, guides
 ├── database/       SQLite file location for local dev
 ├── uploads/        Uploaded source files (never modified)
@@ -35,8 +32,8 @@ Key design principles (enforced in code, not just documented):
 - **No black-box analytics** — every classification returns *why* (reason
   strings, formulas, thresholds, confidence); KPI tiles carry definition +
   formula tooltips.
-- **Human-in-the-loop** — cleansing is proposal + approval; planning parameters
-  are recommendations; nothing modifies source data.
+- **Operator-centered and human-in-the-loop** — shipment lifecycle, provider assignment, milestones, exceptions and POD evidence are authenticated and audited; intelligence and AI remain advisory.
+- **Bounded ownership** — Logix owns logistics operations, WMS owns warehouse execution, R4C owns project/commercial truth and ERP remains accounting authority.
 - **Source-data protection** — original files are kept verbatim; datasets are
   versioned; every transformation is logged.
 - **Governed AI** — the AI never computes metrics or queries the database. It
@@ -52,7 +49,7 @@ npm install
 npm run build:packages          # compile shared packages once
 cp .env.example .env            # defaults work for dev (SQLite); set ADMIN_INITIAL_PASSWORD
 npm run migrate                 # create the schema
-npm run seed                    # admin user + default configuration
+npm run seed                    # development/UAT admin, configuration and fictional Logix operations fixture
 npm run dev:api                 # API on :4000
 npm run dev:web                 # UI on :5173 (proxies /api to :4000)
 ```
@@ -64,7 +61,7 @@ If `ADMIN_INITIAL_PASSWORD` is unset, the seed prints a generated password once.
 ```bash
 npm run build                   # packages + api + web
 npm run migrate
-npm run seed                    # first deployment only
+# Provision the initial administrator through the approved production-access procedure; never seed production data.
 npm start                       # serves API and the SPA on $PORT
 ```
 
@@ -73,14 +70,17 @@ Health endpoints: `/api/health`, `/api/version`, `/api/readiness`.
 ## Tests
 
 ```bash
-npm test        # 99 tests: 65 unit (analytics/quality/ai) + 34 API integration (full user journey)
+npm test        # full deterministic, API integration and tenant/security test suite
 ```
 
 ## Documentation
 
 | Document | Purpose |
 |---|---|
-| `docs/ARCHITECTURE.md` | Modules, data model, API map, AI agent design |
+| `docs/architecture/KYNOX_PORTFOLIO_ARCHITECTURE_V2.md` | Reconciled KYNOX portfolio, evidence gate and implementation scope |
+| `docs/architecture/LOGIX_3PL_4PL_DOMAIN_MODEL.md` | Logix operations, 3PL/4PL bounded-domain model and lifecycle |
+| `docs/architecture/CANONICAL_OPERATIONS_MODEL.md` | Tenant-scoped canonical operations entities, events and audit rules |
+| `docs/ARCHITECTURE.md` | Existing modules, data model, API map and AI agent design |
 | `docs/DEPLOYMENT_HOSTINGER.md` | Subdomain setup, Node app config, DB, SSL, backup, rollback |
 | `docs/KPI_DICTIONARY.md` | Every KPI/classification: definition, formula, configuration |
 | `docs/AI_GOVERNANCE.md` | AI safeguards, agent responsibilities, logging |
@@ -89,8 +89,4 @@ npm test        # 99 tests: 65 unit (analytics/quality/ai) + 34 API integration 
 
 ## Security summary
 
-JWT auth (bcrypt-hashed passwords, account lockout, login rate limiting),
-per-route RBAC from a 12-role permission matrix, upload extension+MIME
-validation with filename sanitisation, parameterised queries via Knex,
-helmet security headers, API rate limiting, sanitised error responses,
-append-only audit log (no secrets ever logged), environment-variable secrets.
+JWT auth (bcrypt-hashed passwords, account lockout and login rate limiting), fail-closed tenant membership and per-route RBAC, parameterised queries via Knex, helmet security headers, API rate limiting, sanitised errors and append-only audit records. Logix operations enforce tenant-scoped object lookups, deterministic lifecycle transitions, event provenance/idempotency and validated POD metadata references; no secrets or raw attachment payloads enter the audit trail.

@@ -15,7 +15,13 @@
     "logistics-contract",
     "logistics-decision-object",
     "warehouse-read-model",
-    "r4c-requirement-reference"
+    "r4c-requirement-reference",
+    "logistics-operation-contract",
+    "logistics-provider-contract",
+    "shipment-lifecycle-contract",
+    "logistics-event-contract",
+    "logistics-exception-contract",
+    "pod-metadata-contract"
   ],
   "owner": "Backend",
   "permissions": [],
@@ -24,6 +30,6 @@
     "packages/shared-types/src/index.ts",
     "packages/shared-types/src/logistics.ts"
   ],
-  "purpose": "Define the types, canonical transaction vocabulary, and the single role-to-permission matrix that every other module in the platform shares.",
+  "purpose": "Define shared canonical transaction and logistics-operation vocabulary, read-only WMS/R4C references, and the single role-to-permission matrix used by all Logix modules.",
   "schemaVersion": "1.0.0"
 }

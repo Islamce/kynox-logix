@@ -10,7 +10,9 @@
     "workspace-route",
     "dashboard-view",
     "reconciliation-view",
-    "data-quality-view"
+    "data-quality-view",
+    "logistics-operations-workspace",
+    "shipment-operator-journey"
   ],
   "owner": "Frontend",
   "permissions": [],
@@ -18,6 +20,6 @@
     "apps/web/package.json",
     "apps/web/index.html"
   ],
-  "purpose": "Present the inventory, data-quality, reconciliation, analytics, planning, AI, reports, administration and audit workspaces to users as a React SPA served by the API in production.",
+  "purpose": "Present KYNOX Logix inventory intelligence and operator workspaces, including tenant-scoped shipment, provider, milestone, exception, POD-evidence and logistics-intelligence journeys, as a React SPA served by the API in production.",
   "schemaVersion": "1.0.0"
 }

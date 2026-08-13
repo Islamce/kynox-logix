@@ -5,13 +5,14 @@ export interface NavItem {
   to: string;
   label: string;
   icon: IconName;
-  section: 'Overview' | 'Analysis' | 'Governance';
+  section: 'Overview' | 'Operations' | 'Analysis' | 'Governance';
 }
 
 export const NAV: NavItem[] = [
   { to: '/', label: 'Executive Dashboard', icon: 'dashboard', section: 'Overview' },
   { to: '/workspace', label: 'Data Workspace', icon: 'workspace', section: 'Overview' },
   { to: '/quality', label: 'Data Quality Center', icon: 'quality', section: 'Overview' },
+  { to: '/operations', label: 'Logistics Operations', icon: 'workspace', section: 'Operations' },
   { to: '/inventory', label: 'Inventory Intelligence', icon: 'inventory', section: 'Analysis' },
   { to: '/reconciliation', label: 'Inventory Reconciliation', icon: 'database', section: 'Analysis' },
   { to: '/abc-xyz', label: 'ABC–XYZ Analysis', icon: 'abcxyz', section: 'Analysis' },

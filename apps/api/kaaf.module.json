@@ -79,6 +79,16 @@
       "responseType": "Maintenance operation results",
       "stability": "experimental",
       "version": "1"
+    },
+    {
+      "auth": "jwt",
+      "id": "logix-operations-api",
+      "kind": "rest",
+      "path": "apps/api/src/routes/operations.ts",
+      "requestType": "HTTP /api/operations — providers, transport requirements, shipments, lifecycle events, exceptions, POD metadata, charges and deterministic logistics intelligence",
+      "responseType": "Tenant-scoped operational records with audit, provenance and idempotency safeguards",
+      "stability": "evolving",
+      "version": "1"
     }
   ],
   "confidence": "verified",
@@ -87,7 +97,8 @@
     "analytics-shared-types",
     "analytics-engine",
     "analytics-data-quality",
-    "analytics-ai-engine"
+    "analytics-ai-engine",
+    "analytics-logistics-engine"
   ],
   "externalIntegrations": [
     {
@@ -167,6 +178,32 @@
         }
       ],
       "title": "Serve an analytics surface from canonical transactions"
+    },
+    {
+      "id": "operate-shipment",
+      "steps": [
+        {
+          "action": "create a tenant-scoped shipment and optional provider assignment",
+          "from": "analytics-web",
+          "to": "logix-operations-api"
+        },
+        {
+          "action": "record controlled lifecycle milestones with provenance and idempotency",
+          "from": "logix-operations-api",
+          "to": "database"
+        },
+        {
+          "action": "create or resolve an exception and record POD metadata",
+          "from": "analytics-web",
+          "to": "logix-operations-api"
+        },
+        {
+          "action": "calculate provider performance and transport spend from operational evidence",
+          "from": "logix-operations-api",
+          "to": "analytics-logistics-engine"
+        }
+      ],
+      "title": "Operate a shipment from planning through POD evidence"
     }
   ],
   "id": "analytics-api",
@@ -184,7 +221,17 @@
     "export",
     "config",
     "audit_log",
-    "ai_log"
+    "ai_log",
+    "logistics_provider",
+    "transport_requirement",
+    "shipment",
+    "shipment_leg",
+    "shipment_reference",
+    "logistics_event",
+    "logistics_exception",
+    "shipment_pod",
+    "freight_charge",
+    "logistics_idempotency"
   ],
   "owner": "Backend",
   "permissions": [
@@ -387,6 +434,58 @@
       "roles": [
         "system_admin"
       ]
+    },
+    {
+      "action": "read",
+      "domain": "logistics_operations",
+      "enforcedAt": [
+        "apps/api/src/middleware/auth.ts",
+        "apps/api/src/routes/operations.ts"
+      ],
+      "key": "view_operations",
+      "resource": "shipment and operations evidence",
+      "roles": [
+        "system_admin", "data_admin", "supply_chain_director", "supply_chain_manager", "inventory_manager", "warehouse_manager", "material_planner", "inventory_controller", "data_analyst", "auditor", "executive_viewer", "read_only"
+      ]
+    },
+    {
+      "action": "manage",
+      "domain": "logistics_operations",
+      "enforcedAt": [
+        "apps/api/src/middleware/auth.ts",
+        "apps/api/src/routes/operations.ts"
+      ],
+      "key": "manage_operations",
+      "resource": "shipment lifecycle, events, exceptions and charges",
+      "roles": [
+        "system_admin", "data_admin", "supply_chain_manager"
+      ]
+    },
+    {
+      "action": "manage",
+      "domain": "logistics_operations",
+      "enforcedAt": [
+        "apps/api/src/middleware/auth.ts",
+        "apps/api/src/routes/operations.ts"
+      ],
+      "key": "manage_providers",
+      "resource": "logistics provider",
+      "roles": [
+        "system_admin", "data_admin", "supply_chain_manager"
+      ]
+    },
+    {
+      "action": "create",
+      "domain": "logistics_operations",
+      "enforcedAt": [
+        "apps/api/src/middleware/auth.ts",
+        "apps/api/src/routes/operations.ts"
+      ],
+      "key": "record_pod",
+      "resource": "POD metadata",
+      "roles": [
+        "system_admin", "data_admin", "supply_chain_manager", "warehouse_manager"
+      ]
     }
   ],
   "publicEntryPoints": [
@@ -394,6 +493,6 @@
     "apps/api/src/server.ts",
     "apps/api/src/app.ts"
   ],
-  "purpose": "Serve the inventory diagnostic over HTTP: resolve fail-closed tenant and membership context, ingest and version tenant-owned datasets, normalize them into the canonical transaction model, enforce tenant-scoped role-based access, and expose analytics, reconciliation, export, and preview-only logistics import mapping and quality surfaces. Logistics persistence remains gated.",
+  "purpose": "Serve KYNOX Logix over HTTP: resolve fail-closed tenant and membership context, preserve governed inventory diagnostics and analytics, and operate tenant-scoped transport requirements, shipments, providers, lifecycle events, exceptions, POD metadata, freight operational context and deterministic logistics intelligence.",
   "schemaVersion": "1.0.0"
 }

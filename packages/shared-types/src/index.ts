@@ -448,46 +448,52 @@ export type Permission =
   | 'manage_users'
   | 'delete_dataset'
   | 'view_audit'
-  | 'change_config';
+  | 'change_config'
+  | 'view_operations'
+  | 'manage_operations'
+  | 'manage_providers'
+  | 'record_pod';
 
 export const ROLE_PERMISSIONS: Record<Role, Permission[]> = {
   system_admin: [
     'upload', 'view_dataset', 'edit_mapping', 'approve_cleansing', 'run_analysis',
     'view_financials', 'use_ai', 'export', 'manage_users', 'delete_dataset',
-    'view_audit', 'change_config',
+    'view_audit', 'change_config', 'view_operations', 'manage_operations',
+    'manage_providers', 'record_pod',
   ],
   data_admin: [
     'upload', 'view_dataset', 'edit_mapping', 'approve_cleansing', 'run_analysis',
     'view_financials', 'use_ai', 'export', 'delete_dataset', 'view_audit',
+    'view_operations', 'manage_operations', 'manage_providers', 'record_pod',
   ],
   supply_chain_director: [
-    'view_dataset', 'run_analysis', 'view_financials', 'use_ai', 'export', 'view_audit',
+    'view_dataset', 'run_analysis', 'view_financials', 'use_ai', 'export', 'view_audit', 'view_operations',
   ],
   supply_chain_manager: [
     'upload', 'view_dataset', 'edit_mapping', 'approve_cleansing', 'run_analysis',
-    'view_financials', 'use_ai', 'export',
+    'view_financials', 'use_ai', 'export', 'view_operations', 'manage_operations', 'manage_providers', 'record_pod',
   ],
   inventory_manager: [
     'upload', 'view_dataset', 'edit_mapping', 'approve_cleansing', 'run_analysis',
-    'view_financials', 'use_ai', 'export',
+    'view_financials', 'use_ai', 'export', 'view_operations',
   ],
   warehouse_manager: [
-    'upload', 'view_dataset', 'run_analysis', 'use_ai', 'export',
+    'upload', 'view_dataset', 'run_analysis', 'use_ai', 'export', 'view_operations', 'record_pod',
   ],
   material_planner: [
     'upload', 'view_dataset', 'edit_mapping', 'approve_cleansing', 'run_analysis',
-    'use_ai', 'export',
+    'use_ai', 'export', 'view_operations',
   ],
   inventory_controller: [
-    'view_dataset', 'run_analysis', 'use_ai', 'export',
+    'view_dataset', 'run_analysis', 'use_ai', 'export', 'view_operations',
   ],
   data_analyst: [
     'upload', 'view_dataset', 'edit_mapping', 'run_analysis', 'view_financials',
-    'use_ai', 'export',
+    'use_ai', 'export', 'view_operations',
   ],
-  auditor: ['view_dataset', 'view_audit', 'export'],
-  executive_viewer: ['view_dataset', 'run_analysis', 'view_financials', 'use_ai'],
-  read_only: ['view_dataset'],
+  auditor: ['view_dataset', 'view_audit', 'export', 'view_operations'],
+  executive_viewer: ['view_dataset', 'run_analysis', 'view_financials', 'use_ai', 'view_operations'],
+  read_only: ['view_dataset', 'view_operations'],
   // Core upload -> analyze -> export workflow only. Deliberately excludes
   // use_ai (cost-bearing), manage_users, delete_dataset, view_audit and
   // change_config — admin/governance/AI stay behind real login even when

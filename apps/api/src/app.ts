@@ -16,6 +16,7 @@ import { analyticsRouter } from './routes/analytics';
 import { aiRouter } from './routes/ai';
 import { exportsRouter } from './routes/exports';
 import { maintenanceRouter } from './routes/maintenance';
+import { operationsRouter } from './routes/operations';
 
 export function createApp(): express.Express {
   const app = express();
@@ -71,6 +72,7 @@ export function createApp(): express.Express {
   app.use('/api/ai', aiRouter);
   app.use('/api/exports', exportsRouter);
   app.use('/api/maintenance', maintenanceRouter);
+  app.use('/api/operations', operationsRouter);
 
   app.use('/api', (_req, res) => res.status(404).json({ error: 'Not found' }));
 

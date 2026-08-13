@@ -10,7 +10,7 @@ import { Button } from './ui';
 
 // Admin, audit and AI chat stay behind real login even in public-demo mode —
 // hidden here so a guest never sees a link that only ever 403s for them.
-const GUEST_HIDDEN_PATHS = new Set(['/ai', '/admin', '/audit']);
+const GUEST_HIDDEN_PATHS = new Set(['/ai', '/admin', '/audit', '/operations']);
 
 interface DatasetOption {
   id: number;
@@ -19,8 +19,8 @@ interface DatasetOption {
   kind: string;
 }
 
-const SECTIONS: Array<NavItemSection> = ['Overview', 'Analysis', 'Governance'];
-type NavItemSection = 'Overview' | 'Analysis' | 'Governance';
+const SECTIONS: Array<NavItemSection> = ['Overview', 'Operations', 'Analysis', 'Governance'];
+type NavItemSection = 'Overview' | 'Operations' | 'Analysis' | 'Governance';
 
 export function Layout() {
   const navigate = useNavigate();
@@ -105,7 +105,7 @@ export function Layout() {
           </span>
           <div className="leading-tight">
             <p className="font-semibold text-white">Kynox</p>
-            <p className="text-[11px]" style={{ color: 'var(--kx-sidebar-fg-dim)' }}>Logix · Logistics Intelligence</p>
+            <p className="text-[11px]" style={{ color: 'var(--kx-sidebar-fg-dim)' }}>Logix · Operations & Orchestration</p>
           </div>
         </div>
 

@@ -17,6 +17,7 @@ import { AiCenterPage } from './pages/AiCenter';
 import { ReportsPage } from './pages/Reports';
 import { AdminPage } from './pages/Admin';
 import { AuditPage } from './pages/Audit';
+import { OperationsPage } from './pages/Operations';
 
 type AuthGate = 'checking' | 'allow' | 'deny';
 
@@ -58,6 +59,7 @@ export function App() {
           <Route path="/" element={<DashboardPage />} />
           <Route path="/workspace" element={<WorkspacePage />} />
           <Route path="/quality" element={<QualityPage />} />
+          <Route path="/operations" element={<OperationsPage />} />
           <Route path="/inventory" element={<InventoryPage />} />
           <Route path="/reconciliation" element={<ReconciliationPage />} />
           <Route path="/abc-xyz" element={<AbcXyzPage />} />
