@@ -1,16 +1,16 @@
 <!-- KAAF-GENERATED — do not edit by hand. Regenerate with scripts/architecture/generate.sh. -->
 
-# Kynox Inventory Intelligence — Architecture Summary
+# KYNOX Logix — Architecture Summary
 
-Kynox Inventory Intelligence — a source-neutral inventory diagnostic that ingests customer exports, normalizes them into a canonical transaction model, and serves data-quality, reconciliation, and inventory analytics.
+KYNOX Logix — a tenant-scoped logistics operations, 3PL management and future 4PL orchestration platform with embedded KYNOX intelligence. It retains governed inventory analytics while owning transport requirements, shipments, provider coordination, operational events, exceptions, POD metadata and freight operational context.
 
-- Repository: `Islamce/kynox-inventory-analytics`
+- Repository: `Islamce/kynox-logix`
 - Default branch: `main`
 - KAAF phase: 7
 - Modules: 11 declared, 0 discovered only
 - Drift: 0 error, 0 warning, 2 info
 - Generator: `kaaf` v0.7.0
-- Input digest: `0c394c5d49ec9b7e…`
+- Input digest: `e9f05acc14e56406…`
 
 ## Modules
 
@@ -21,7 +21,7 @@ check against, `derived` = discovered with no declaration.
 | Module | Path | Owner | Purpose | Confidence |
 |---|---|---|---|---|
 | `analytics-ai-engine` | `packages/ai-engine` | AI Engineering | Run the documented analytics agents over evidence packages built from verified data, behind a provider abstraction so no single vendor is load-bearing. | `verified` |
-| `analytics-api` | `apps/api` | Backend | Serve the inventory diagnostic over HTTP: resolve fail-closed tenant and membership context, ingest and version tenant-owned datasets, normalize them into the canonical transaction model, enforce tenant-scoped role-based access, and expose analytics, reconciliation, export, and preview-only logistics import mapping and quality surfaces. Logistics persistence remains gated. | `verified` |
+| `analytics-api` | `apps/api` | Backend | Serve KYNOX Logix over HTTP: resolve fail-closed tenant and membership context, preserve governed inventory diagnostics and analytics, and operate tenant-scoped transport requirements, shipments, providers, lifecycle events, exceptions, POD metadata, freight operational context and deterministic logistics intelligence. | `verified` |
 | `analytics-data-quality` | `packages/data-quality` | Data | Score incoming customer data, propose and apply cleansing, and normalize ambiguous values such as dates so downstream analytics receive evidence-tagged input. | `verified` |
 | `analytics-deployment` | `scripts/deployment` | DevOps | Carry out staged deployment and its safety operations — preflight checks, database backup and restore, rollback, and post-deploy smoke tests. Executing any of these against a real environment is a protected action requiring approval. | `verified` |
 | `analytics-engine` | `packages/analytics-engine` | Data | Compute the inventory analytics the product sells — ABC, XYZ, aging, consumption, excess, shortage, health, forecasting and planning — as pure functions over canonical transactions. | `verified` |
@@ -29,8 +29,8 @@ check against, `derived` = discovered with no declaration.
 | `analytics-kaaf-tooling` | `scripts/architecture` | DevOps | Generate and validate this repository's KAAF architecture context. Vendored from Islamce/KAAF; see VENDORED.md before changing anything here. | `verified` |
 | `analytics-logistics-engine` | `packages/logistics-engine` | Data | Compute bounded Logistics Intelligence metrics as pure, evidence-oriented functions without owning warehouse execution, project/WBS truth, or transport execution. | `verified` |
 | `analytics-runtime-entry` | `.` | DevOps | Start the production process: boot the API, which also serves the built web SPA, under the PM2 configuration used on the managed host. | `verified` |
-| `analytics-shared-types` | `packages/shared-types` | Backend | Define the types, canonical transaction vocabulary, and the single role-to-permission matrix that every other module in the platform shares. | `verified` |
-| `analytics-web` | `apps/web` | Frontend | Present the inventory, data-quality, reconciliation, analytics, planning, AI, reports, administration and audit workspaces to users as a React SPA served by the API in production. | `verified` |
+| `analytics-shared-types` | `packages/shared-types` | Backend | Define shared canonical transaction and logistics-operation vocabulary, read-only WMS/R4C references, and the single role-to-permission matrix used by all Logix modules. | `verified` |
+| `analytics-web` | `apps/web` | Frontend | Present KYNOX Logix inventory intelligence and operator workspaces, including tenant-scoped shipment, provider, milestone, exception, POD-evidence and logistics-intelligence journeys, as a React SPA served by the API in production. | `verified` |
 
 ## Dependencies
 
@@ -51,6 +51,7 @@ graph LR
   analytics_api --> analytics_ai_engine
   analytics_api --> analytics_data_quality
   analytics_api --> analytics_engine
+  analytics_api --> analytics_logistics_engine
   analytics_api --> analytics_shared_types
   analytics_data_quality --> analytics_shared_types
   analytics_engine --> analytics_shared_types
@@ -70,6 +71,7 @@ imports but are not declared — see the drift section below.
 | `auth-api` | rest | `analytics-api` | `apps/api/src/routes/auth.ts` | stable |
 | `datasets-api` | rest | `analytics-api` | `apps/api/src/routes/datasets.ts` | evolving |
 | `exports-api` | rest | `analytics-api` | `apps/api/src/routes/exports.ts` | evolving |
+| `logix-operations-api` | rest | `analytics-api` | `apps/api/src/routes/operations.ts` | evolving |
 | `maintenance-api` | rest | `analytics-api` | `apps/api/src/routes/maintenance.ts` | experimental |
 | `uploads-api` | rest | `analytics-api` | `apps/api/src/routes/uploads.ts` | evolving |
 
@@ -88,6 +90,10 @@ imports but are not declared — see the drift section below.
 | `analytics.mapping.update` | `analytics-api` | system_admin, data_admin, supply_chain_manager, inventory_manager, material_planner, data_analyst | `apps/api/src/middleware/auth.ts`, `apps/api/src/routes/datasets.ts` |
 | `analytics.upload.create` | `analytics-api` | system_admin, data_admin, supply_chain_manager, inventory_manager, warehouse_manager, material_planner, data_analyst | `apps/api/src/middleware/auth.ts`, `apps/api/src/routes/uploads.ts` |
 | `analytics.user.manage` | `analytics-api` | system_admin | `apps/api/src/middleware/auth.ts`, `apps/api/src/routes/admin.ts` |
+| `manage_operations` | `analytics-api` | system_admin, data_admin, supply_chain_manager | `apps/api/src/middleware/auth.ts`, `apps/api/src/routes/operations.ts` |
+| `manage_providers` | `analytics-api` | system_admin, data_admin, supply_chain_manager | `apps/api/src/middleware/auth.ts`, `apps/api/src/routes/operations.ts` |
+| `record_pod` | `analytics-api` | system_admin, data_admin, supply_chain_manager, warehouse_manager | `apps/api/src/middleware/auth.ts`, `apps/api/src/routes/operations.ts` |
+| `view_operations` | `analytics-api` | system_admin, data_admin, supply_chain_director, supply_chain_manager, inventory_manager, warehouse_manager, material_planner, inventory_controller, data_analyst, auditor, executive_viewer, read_only | `apps/api/src/middleware/auth.ts`, `apps/api/src/routes/operations.ts` |
 
 ## External integrations
 
@@ -120,4 +126,4 @@ Full detail, with evidence and recommendations, in `.ai/drift.json`.
 Declarations come from `kaaf.repo.json` and `kaaf.module.json`. Discovery is a static
 read of the source: dynamic imports and runtime wiring are invisible to it, so the
 absence of a drift finding is not proof that none exists.
-<!-- kaaf:bodyDigest=387e99727c681cf31c88ed8efb49d6f269e54435c15e749871cb373ce1fdd08c -->
+<!-- kaaf:bodyDigest=afbb614d7dc51ece54254949aaf9f530e6d2c0e69d1dbadd473fe1b2ae41cfd8 -->

@@ -1,12 +1,12 @@
 {
   "_meta": {
     "artifact": "modules/analytics-api.json",
-    "bodyDigest": "0421ab738392ace6a8c2712eed1e430f1882e4a388b8d81df05ebe66ae356024",
+    "bodyDigest": "3b7bf397d65ec6ef098239fe33ea32816581de2c2c4df6253b5be1936a497063",
     "confidence": "verified",
     "doNotEdit": true,
     "generator": "kaaf",
     "generatorVersion": "0.7.0",
-    "inputDigest": "0c394c5d49ec9b7e9deb4ab45c75907afc3ae5da7a89709ea7101e8fbf79ba9d",
+    "inputDigest": "e9f05acc14e564063d65fd845fa5182c51267d1d265b80dc4f4e3a1ec742ed95",
     "provenanceNote": "Generated from the declared kaaf.repo.json and kaaf.module.json manifests. No wall-clock time or commit SHA is embedded: both would break byte-identical regeneration. Use git history for when and from which commit.",
     "schemaVersion": "1.0.0"
   },
@@ -73,6 +73,16 @@
     },
     {
       "auth": "jwt",
+      "id": "logix-operations-api",
+      "kind": "rest",
+      "path": "apps/api/src/routes/operations.ts",
+      "requestType": "HTTP /api/operations — providers, transport requirements, shipments, lifecycle events, exceptions, POD metadata, charges and deterministic logistics intelligence",
+      "responseType": "Tenant-scoped operational records with audit, provenance and idempotency safeguards",
+      "stability": "evolving",
+      "version": "1"
+    },
+    {
+      "auth": "jwt",
       "id": "maintenance-api",
       "kind": "rest",
       "path": "apps/api/src/routes/maintenance.ts",
@@ -93,7 +103,7 @@
     }
   ],
   "confidence": "verified",
-  "confidenceReason": "Declared and corroborated by 40 discovered code file(s).",
+  "confidenceReason": "Declared and corroborated by 45 discovered code file(s).",
   "declared": true,
   "declaredConfidence": "verified",
   "dependedOnBy": [],
@@ -101,6 +111,7 @@
     "analytics-ai-engine",
     "analytics-data-quality",
     "analytics-engine",
+    "analytics-logistics-engine",
     "analytics-shared-types"
   ],
   "discovery": {
@@ -114,7 +125,9 @@
       "apps/api/src/db/migrations/20260719000002_ai_usage_columns.js",
       "apps/api/src/db/migrations/20260722000003_canonical_normalization.js",
       "apps/api/src/db/migrations/20260812000004_tenant_foundation.js",
+      "apps/api/src/db/migrations/20260814000005_logistics_operations_foundation.js",
       "apps/api/src/db/seeds/001_admin_user.js",
+      "apps/api/src/db/seeds/002_logix_operations_demo.js",
       "apps/api/src/logger.ts",
       "apps/api/src/mapping.test.ts",
       "apps/api/src/middleware/auth.ts",
@@ -122,6 +135,7 @@
       "apps/api/src/middleware/errors.ts",
       "apps/api/src/middleware/guestScope.ts",
       "apps/api/src/normalization.test.ts",
+      "apps/api/src/operations.test.ts",
       "apps/api/src/pipeline.test.ts",
       "apps/api/src/publicDemo.test.ts",
       "apps/api/src/reconciliation.test.ts",
@@ -132,6 +146,7 @@
       "apps/api/src/routes/datasets.ts",
       "apps/api/src/routes/exports.ts",
       "apps/api/src/routes/maintenance.ts",
+      "apps/api/src/routes/operations.ts",
       "apps/api/src/routes/uploads.ts",
       "apps/api/src/server.ts",
       "apps/api/src/services/analytics.ts",
@@ -139,6 +154,7 @@
       "apps/api/src/services/cleanup.ts",
       "apps/api/src/services/detection.ts",
       "apps/api/src/services/files.ts",
+      "apps/api/src/services/logisticsOperations.ts",
       "apps/api/src/services/mapping.ts",
       "apps/api/src/services/normalization.ts",
       "apps/api/src/services/reconciliation.ts",
@@ -169,7 +185,9 @@
       "apps/api/src/db/migrations/20260719000002_ai_usage_columns.js",
       "apps/api/src/db/migrations/20260722000003_canonical_normalization.js",
       "apps/api/src/db/migrations/20260812000004_tenant_foundation.js",
+      "apps/api/src/db/migrations/20260814000005_logistics_operations_foundation.js",
       "apps/api/src/db/seeds/001_admin_user.js",
+      "apps/api/src/db/seeds/002_logix_operations_demo.js",
       "apps/api/src/logger.ts",
       "apps/api/src/mapping.test.ts",
       "apps/api/src/middleware/auth.ts",
@@ -177,6 +195,7 @@
       "apps/api/src/middleware/errors.ts",
       "apps/api/src/middleware/guestScope.ts",
       "apps/api/src/normalization.test.ts",
+      "apps/api/src/operations.test.ts",
       "apps/api/src/pipeline.test.ts",
       "apps/api/src/publicDemo.test.ts",
       "apps/api/src/reconciliation.test.ts",
@@ -187,6 +206,7 @@
       "apps/api/src/routes/datasets.ts",
       "apps/api/src/routes/exports.ts",
       "apps/api/src/routes/maintenance.ts",
+      "apps/api/src/routes/operations.ts",
       "apps/api/src/routes/uploads.ts",
       "apps/api/src/server.ts",
       "apps/api/src/services/analytics.ts",
@@ -194,6 +214,7 @@
       "apps/api/src/services/cleanup.ts",
       "apps/api/src/services/detection.ts",
       "apps/api/src/services/files.ts",
+      "apps/api/src/services/logisticsOperations.ts",
       "apps/api/src/services/mapping.ts",
       "apps/api/src/services/normalization.ts",
       "apps/api/src/services/reconciliation.ts",
@@ -220,12 +241,22 @@
     "config",
     "dataset",
     "export",
+    "freight_charge",
+    "logistics_event",
+    "logistics_exception",
+    "logistics_idempotency",
+    "logistics_provider",
     "material_master",
     "movement",
     "physical_inventory",
+    "shipment",
+    "shipment_leg",
+    "shipment_pod",
+    "shipment_reference",
     "stock_item",
     "tenant",
     "tenant_membership",
+    "transport_requirement",
     "upload",
     "user"
   ],
@@ -431,6 +462,76 @@
       "roles": [
         "system_admin"
       ]
+    },
+    {
+      "action": "manage",
+      "domain": "logistics_operations",
+      "enforcedAt": [
+        "apps/api/src/middleware/auth.ts",
+        "apps/api/src/routes/operations.ts"
+      ],
+      "key": "manage_operations",
+      "resource": "shipment lifecycle, events, exceptions and charges",
+      "roles": [
+        "system_admin",
+        "data_admin",
+        "supply_chain_manager"
+      ]
+    },
+    {
+      "action": "manage",
+      "domain": "logistics_operations",
+      "enforcedAt": [
+        "apps/api/src/middleware/auth.ts",
+        "apps/api/src/routes/operations.ts"
+      ],
+      "key": "manage_providers",
+      "resource": "logistics provider",
+      "roles": [
+        "system_admin",
+        "data_admin",
+        "supply_chain_manager"
+      ]
+    },
+    {
+      "action": "create",
+      "domain": "logistics_operations",
+      "enforcedAt": [
+        "apps/api/src/middleware/auth.ts",
+        "apps/api/src/routes/operations.ts"
+      ],
+      "key": "record_pod",
+      "resource": "POD metadata",
+      "roles": [
+        "system_admin",
+        "data_admin",
+        "supply_chain_manager",
+        "warehouse_manager"
+      ]
+    },
+    {
+      "action": "read",
+      "domain": "logistics_operations",
+      "enforcedAt": [
+        "apps/api/src/middleware/auth.ts",
+        "apps/api/src/routes/operations.ts"
+      ],
+      "key": "view_operations",
+      "resource": "shipment and operations evidence",
+      "roles": [
+        "system_admin",
+        "data_admin",
+        "supply_chain_director",
+        "supply_chain_manager",
+        "inventory_manager",
+        "warehouse_manager",
+        "material_planner",
+        "inventory_controller",
+        "data_analyst",
+        "auditor",
+        "executive_viewer",
+        "read_only"
+      ]
     }
   ],
   "publicEntryPoints": [
@@ -438,7 +539,7 @@
     "apps/api/src/app.ts",
     "apps/api/src/server.ts"
   ],
-  "purpose": "Serve the inventory diagnostic over HTTP: resolve fail-closed tenant and membership context, ingest and version tenant-owned datasets, normalize them into the canonical transaction model, enforce tenant-scoped role-based access, and expose analytics, reconciliation, export, and preview-only logistics import mapping and quality surfaces. Logistics persistence remains gated.",
+  "purpose": "Serve KYNOX Logix over HTTP: resolve fail-closed tenant and membership context, preserve governed inventory diagnostics and analytics, and operate tenant-scoped transport requirements, shipments, providers, lifecycle events, exceptions, POD metadata, freight operational context and deterministic logistics intelligence.",
   "readNext": [
     "apps/api/package.json",
     "apps/api/src/app.ts",

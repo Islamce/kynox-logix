@@ -22,6 +22,7 @@ same commit that makes it.
 | [container.md](container.md) | Container (L2) |
 | [context.md](context.md) | Context (L1) |
 | [flow-analytics-api-ingest-dataset.md](flow-analytics-api-ingest-dataset.md) | Flow (sequence) |
+| [flow-analytics-api-operate-shipment.md](flow-analytics-api-operate-shipment.md) | Flow (sequence) |
 | [flow-analytics-api-serve-analytics.md](flow-analytics-api-serve-analytics.md) | Flow (sequence) |
 
 Diagrams are split above 20 nodes rather than shrunk
@@ -33,4 +34,4 @@ never committed.
 - Solid arrow: a dependency declared in a `kaaf.module.json` manifest.
 - Dotted arrow: a real import discovered in the source that no manifest declares — see `.ai/drift.json`.
 - Node outline reflects confidence: solid = `verified`, dashed = `documented` or `derived`.
-<!-- kaaf:bodyDigest=c558d43dafd2484a96fc60d8f2e23af8a4c0e2e51917ea6ca54f51d1fab1bac4 -->
+<!-- kaaf:bodyDigest=2d36bc334e971ab5d77546bf66fadf585854e1a65c282593e8150a309b31c356 -->

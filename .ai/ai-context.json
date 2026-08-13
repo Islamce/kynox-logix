@@ -1,12 +1,12 @@
 {
   "_meta": {
     "artifact": "ai-context.json",
-    "bodyDigest": "acac7cdb9ab865c3ab5291af47534db441cf5f29c0e919051e1b0aa395c0baf4",
+    "bodyDigest": "f7aec38bd15e37e13ad53628237dc20353e66d209a3a7fdc733f7f894d5d3afb",
     "confidence": "verified",
     "doNotEdit": true,
     "generator": "kaaf",
     "generatorVersion": "0.7.0",
-    "inputDigest": "0c394c5d49ec9b7e9deb4ab45c75907afc3ae5da7a89709ea7101e8fbf79ba9d",
+    "inputDigest": "e9f05acc14e564063d65fd845fa5182c51267d1d265b80dc4f4e3a1ec742ed95",
     "provenanceNote": "Generated from the declared kaaf.repo.json and kaaf.module.json manifests. No wall-clock time or commit SHA is embedded: both would break byte-identical regeneration. Use git history for when and from which commit.",
     "schemaVersion": "1.0.0"
   },
@@ -22,12 +22,12 @@
     "monorepo": "apps/* are deployable applications; packages/* are shared libraries consumed through npm workspaces under the @kynox scope"
   },
   "counts": {
-    "apis": 8,
+    "apis": 9,
     "externalIntegrations": 4,
     "modules": 11,
     "modulesDeclared": 11,
     "modulesUndeclared": 0,
-    "permissions": 11
+    "permissions": 15
   },
   "drift": {
     "counts": {
@@ -66,6 +66,7 @@
         "analytics-ai-engine",
         "analytics-data-quality",
         "analytics-engine",
+        "analytics-logistics-engine",
         "analytics-shared-types"
       ],
       "detail": "modules/analytics-api.json",
@@ -78,7 +79,7 @@
         "apps/api/src/app.ts",
         "apps/api/src/server.ts"
       ],
-      "purpose": "Serve the inventory diagnostic over HTTP: resolve fail-closed tenant and membership context, ingest and version tenant-owned datasets, normalize them into the canonical transaction model, enforce tenant-scoped role-based access, and expose analytics, reconciliation, export, and preview-only logistics import mapping and quality surfaces. Logistics persistence remains gated."
+      "purpose": "Serve KYNOX Logix over HTTP: resolve fail-closed tenant and membership context, preserve governed inventory diagnostics and analytics, and operate tenant-scoped transport requirements, shipments, providers, lifecycle events, exceptions, POD metadata, freight operational context and deterministic logistics intelligence."
     },
     {
       "confidence": "verified",
@@ -213,7 +214,7 @@
         "packages/shared-types/src/index.ts",
         "packages/shared-types/src/logistics.ts"
       ],
-      "purpose": "Define the types, canonical transaction vocabulary, and the single role-to-permission matrix that every other module in the platform shares."
+      "purpose": "Define shared canonical transaction and logistics-operation vocabulary, read-only WMS/R4C references, and the single role-to-permission matrix used by all Logix modules."
     },
     {
       "confidence": "verified",
@@ -229,7 +230,7 @@
         "apps/web/index.html",
         "apps/web/package.json"
       ],
-      "purpose": "Present the inventory, data-quality, reconciliation, analytics, planning, AI, reports, administration and audit workspaces to users as a React SPA served by the API in production."
+      "purpose": "Present KYNOX Logix inventory intelligence and operator workspaces, including tenant-scoped shipment, provider, milestone, exception, POD-evidence and logistics-intelligence journeys, as a React SPA served by the API in production."
     }
   ],
   "pointers": {
@@ -250,9 +251,9 @@
   ],
   "repository": {
     "defaultBranch": "main",
-    "description": "Kynox Inventory Intelligence — a source-neutral inventory diagnostic that ingests customer exports, normalizes them into a canonical transaction model, and serves data-quality, reconciliation, and inventory analytics.",
-    "name": "Kynox Inventory Intelligence",
-    "repository": "Islamce/kynox-inventory-analytics"
+    "description": "KYNOX Logix — a tenant-scoped logistics operations, 3PL management and future 4PL orchestration platform with embedded KYNOX intelligence. It retains governed inventory analytics while owning transport requirements, shipments, provider coordination, operational events, exceptions, POD metadata and freight operational context.",
+    "name": "KYNOX Logix",
+    "repository": "Islamce/kynox-logix"
   },
   "rules": [
     "Never hand-edit anything under .ai/ except README.md and .gitkeep.",

@@ -1,18 +1,18 @@
 {
   "_meta": {
     "artifact": "modules/analytics-web.json",
-    "bodyDigest": "1e89fb873a543eeb5232e3c892342954624a1c8a7f2908c6d51a4ee31f1da950",
+    "bodyDigest": "e0e05723e3fff5e0ece93eccc89a943431cb9fe069b6ee54ea5996bb60686526",
     "confidence": "verified",
     "doNotEdit": true,
     "generator": "kaaf",
     "generatorVersion": "0.7.0",
-    "inputDigest": "0c394c5d49ec9b7e9deb4ab45c75907afc3ae5da7a89709ea7101e8fbf79ba9d",
+    "inputDigest": "e9f05acc14e564063d65fd845fa5182c51267d1d265b80dc4f4e3a1ec742ed95",
     "provenanceNote": "Generated from the declared kaaf.repo.json and kaaf.module.json manifests. No wall-clock time or commit SHA is embedded: both would break byte-identical regeneration. Use git history for when and from which commit.",
     "schemaVersion": "1.0.0"
   },
   "apis": [],
   "confidence": "verified",
-  "confidenceReason": "Declared and corroborated by 29 discovered code file(s).",
+  "confidenceReason": "Declared and corroborated by 30 discovered code file(s).",
   "declared": true,
   "declaredConfidence": "verified",
   "dependedOnBy": [],
@@ -42,6 +42,7 @@
       "apps/web/src/pages/Inventory.tsx",
       "apps/web/src/pages/Login.tsx",
       "apps/web/src/pages/Material360.tsx",
+      "apps/web/src/pages/Operations.tsx",
       "apps/web/src/pages/Planning.tsx",
       "apps/web/src/pages/Quality.tsx",
       "apps/web/src/pages/Reconciliation.tsx",
@@ -85,6 +86,7 @@
       "apps/web/src/pages/Inventory.tsx",
       "apps/web/src/pages/Login.tsx",
       "apps/web/src/pages/Material360.tsx",
+      "apps/web/src/pages/Operations.tsx",
       "apps/web/src/pages/Planning.tsx",
       "apps/web/src/pages/Quality.tsx",
       "apps/web/src/pages/Reconciliation.tsx",
@@ -100,7 +102,9 @@
   "ownedEntities": [
     "dashboard-view",
     "data-quality-view",
+    "logistics-operations-workspace",
     "reconciliation-view",
+    "shipment-operator-journey",
     "workspace-route"
   ],
   "owner": "Frontend",
@@ -110,7 +114,7 @@
     "apps/web/index.html",
     "apps/web/package.json"
   ],
-  "purpose": "Present the inventory, data-quality, reconciliation, analytics, planning, AI, reports, administration and audit workspaces to users as a React SPA served by the API in production.",
+  "purpose": "Present KYNOX Logix inventory intelligence and operator workspaces, including tenant-scoped shipment, provider, milestone, exception, POD-evidence and logistics-intelligence journeys, as a React SPA served by the API in production.",
   "readNext": [
     "apps/web/index.html",
     "apps/web/package.json"

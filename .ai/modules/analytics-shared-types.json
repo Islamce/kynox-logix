@@ -1,12 +1,12 @@
 {
   "_meta": {
     "artifact": "modules/analytics-shared-types.json",
-    "bodyDigest": "a5b964bd6b9143c04188dc6f2378f8ca64ceb094db92cdc9ac83d89870663021",
+    "bodyDigest": "cf90861e4c7cefb2130236f432cc4d90cc022c66daae039ec84bd87e5f4733e0",
     "confidence": "verified",
     "doNotEdit": true,
     "generator": "kaaf",
     "generatorVersion": "0.7.0",
-    "inputDigest": "0c394c5d49ec9b7e9deb4ab45c75907afc3ae5da7a89709ea7101e8fbf79ba9d",
+    "inputDigest": "e9f05acc14e564063d65fd845fa5182c51267d1d265b80dc4f4e3a1ec742ed95",
     "provenanceNote": "Generated from the declared kaaf.repo.json and kaaf.module.json manifests. No wall-clock time or commit SHA is embedded: both would break byte-identical regeneration. Use git history for when and from which commit.",
     "schemaVersion": "1.0.0"
   },
@@ -128,11 +128,17 @@
     "canonical-transaction-category",
     "logistics-contract",
     "logistics-decision-object",
+    "logistics-event-contract",
+    "logistics-exception-contract",
+    "logistics-operation-contract",
+    "logistics-provider-contract",
     "permission",
+    "pod-metadata-contract",
     "r4c-requirement-reference",
     "role",
     "role-permission-matrix",
     "shared-api-dto",
+    "shipment-lifecycle-contract",
     "warehouse-read-model"
   ],
   "owner": "Backend",
@@ -143,7 +149,7 @@
     "packages/shared-types/src/index.ts",
     "packages/shared-types/src/logistics.ts"
   ],
-  "purpose": "Define the types, canonical transaction vocabulary, and the single role-to-permission matrix that every other module in the platform shares.",
+  "purpose": "Define shared canonical transaction and logistics-operation vocabulary, read-only WMS/R4C references, and the single role-to-permission matrix used by all Logix modules.",
   "readNext": [
     "packages/shared-types/package.json",
     "packages/shared-types/src/index.ts",

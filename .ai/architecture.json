@@ -1,12 +1,12 @@
 {
   "_meta": {
     "artifact": "architecture.json",
-    "bodyDigest": "6a10d3f615d833448a5595ce60c379233471c56730cf845d5fa970822b4c366c",
+    "bodyDigest": "f06dd22dc77cbb4bafc0430173786dccbd1d72901eef0e661a2770617f79943f",
     "confidence": "verified",
     "doNotEdit": true,
     "generator": "kaaf",
     "generatorVersion": "0.7.0",
-    "inputDigest": "0c394c5d49ec9b7e9deb4ab45c75907afc3ae5da7a89709ea7101e8fbf79ba9d",
+    "inputDigest": "e9f05acc14e564063d65fd845fa5182c51267d1d265b80dc4f4e3a1ec742ed95",
     "provenanceNote": "Generated from the declared kaaf.repo.json and kaaf.module.json manifests. No wall-clock time or commit SHA is embedded: both would break byte-identical regeneration. Use git history for when and from which commit.",
     "schemaVersion": "1.0.0"
   },
@@ -92,6 +92,19 @@
     {
       "auth": "jwt",
       "confidence": "verified",
+      "id": "logix-operations-api",
+      "kind": "rest",
+      "module": "analytics-api",
+      "path": "apps/api/src/routes/operations.ts",
+      "requestType": "HTTP /api/operations — providers, transport requirements, shipments, lifecycle events, exceptions, POD metadata, charges and deterministic logistics intelligence",
+      "responseType": "Tenant-scoped operational records with audit, provenance and idempotency safeguards",
+      "sourceManifest": "apps/api/kaaf.module.json",
+      "stability": "evolving",
+      "version": "1"
+    },
+    {
+      "auth": "jwt",
+      "confidence": "verified",
       "id": "maintenance-api",
       "kind": "rest",
       "module": "analytics-api",
@@ -133,6 +146,10 @@
       {
         "from": "analytics-api",
         "to": "analytics-engine"
+      },
+      {
+        "from": "analytics-api",
+        "to": "analytics-logistics-engine"
       },
       {
         "from": "analytics-api",
@@ -191,6 +208,14 @@
         ],
         "from": "analytics-api",
         "to": "analytics-engine"
+      },
+      {
+        "declared": true,
+        "evidence": [
+          "apps/api/src/routes/operations.ts"
+        ],
+        "from": "analytics-api",
+        "to": "analytics-logistics-engine"
       },
       {
         "declared": true,
@@ -260,6 +285,10 @@
       {
         "from": "analytics-api",
         "to": "analytics-engine"
+      },
+      {
+        "from": "analytics-api",
+        "to": "analytics-logistics-engine"
       },
       {
         "from": "analytics-api",
@@ -376,7 +405,7 @@
     },
     {
       "confidence": "verified",
-      "confidenceReason": "Declared and corroborated by 40 discovered code file(s).",
+      "confidenceReason": "Declared and corroborated by 45 discovered code file(s).",
       "declared": true,
       "declaredConfidence": "verified",
       "dependedOnBy": [],
@@ -384,10 +413,11 @@
         "analytics-ai-engine",
         "analytics-data-quality",
         "analytics-engine",
+        "analytics-logistics-engine",
         "analytics-shared-types"
       ],
       "discovery": {
-        "codeFileCount": 40,
+        "codeFileCount": 45,
         "discovered": true,
         "entryPoints": [],
         "languages": [
@@ -399,7 +429,7 @@
         "publicSymbols": [
           "createApp"
         ],
-        "sourceFileCount": 43
+        "sourceFileCount": 48
       },
       "id": "analytics-api",
       "ownedEntities": [
@@ -409,12 +439,22 @@
         "config",
         "dataset",
         "export",
+        "freight_charge",
+        "logistics_event",
+        "logistics_exception",
+        "logistics_idempotency",
+        "logistics_provider",
         "material_master",
         "movement",
         "physical_inventory",
+        "shipment",
+        "shipment_leg",
+        "shipment_pod",
+        "shipment_reference",
         "stock_item",
         "tenant",
         "tenant_membership",
+        "transport_requirement",
         "upload",
         "user"
       ],
@@ -425,7 +465,7 @@
         "apps/api/src/app.ts",
         "apps/api/src/server.ts"
       ],
-      "purpose": "Serve the inventory diagnostic over HTTP: resolve fail-closed tenant and membership context, ingest and version tenant-owned datasets, normalize them into the canonical transaction model, enforce tenant-scoped role-based access, and expose analytics, reconciliation, export, and preview-only logistics import mapping and quality surfaces. Logistics persistence remains gated.",
+      "purpose": "Serve KYNOX Logix over HTTP: resolve fail-closed tenant and membership context, preserve governed inventory diagnostics and analytics, and operate tenant-scoped transport requirements, shipments, providers, lifecycle events, exceptions, POD metadata, freight operational context and deterministic logistics intelligence.",
       "sourceManifest": "apps/api/kaaf.module.json"
     },
     {
@@ -642,7 +682,9 @@
       "confidenceReason": "Declared and corroborated by 8 discovered code file(s).",
       "declared": true,
       "declaredConfidence": "verified",
-      "dependedOnBy": [],
+      "dependedOnBy": [
+        "analytics-api"
+      ],
       "dependsOn": [
         "analytics-shared-types"
       ],
@@ -713,7 +755,7 @@
         ],
         "parseErrors": [],
         "publicSymbols": [],
-        "sourceFileCount": 43
+        "sourceFileCount": 55
       },
       "id": "analytics-runtime-entry",
       "ownedEntities": [
@@ -811,11 +853,17 @@
         "canonical-transaction-category",
         "logistics-contract",
         "logistics-decision-object",
+        "logistics-event-contract",
+        "logistics-exception-contract",
+        "logistics-operation-contract",
+        "logistics-provider-contract",
         "permission",
+        "pod-metadata-contract",
         "r4c-requirement-reference",
         "role",
         "role-permission-matrix",
         "shared-api-dto",
+        "shipment-lifecycle-contract",
         "warehouse-read-model"
       ],
       "owner": "Backend",
@@ -825,18 +873,18 @@
         "packages/shared-types/src/index.ts",
         "packages/shared-types/src/logistics.ts"
       ],
-      "purpose": "Define the types, canonical transaction vocabulary, and the single role-to-permission matrix that every other module in the platform shares.",
+      "purpose": "Define shared canonical transaction and logistics-operation vocabulary, read-only WMS/R4C references, and the single role-to-permission matrix used by all Logix modules.",
       "sourceManifest": "packages/shared-types/kaaf.module.json"
     },
     {
       "confidence": "verified",
-      "confidenceReason": "Declared and corroborated by 29 discovered code file(s).",
+      "confidenceReason": "Declared and corroborated by 30 discovered code file(s).",
       "declared": true,
       "declaredConfidence": "verified",
       "dependedOnBy": [],
       "dependsOn": [],
       "discovery": {
-        "codeFileCount": 29,
+        "codeFileCount": 30,
         "discovered": true,
         "entryPoints": [],
         "languages": [
@@ -846,13 +894,15 @@
         ],
         "parseErrors": [],
         "publicSymbols": [],
-        "sourceFileCount": 33
+        "sourceFileCount": 34
       },
       "id": "analytics-web",
       "ownedEntities": [
         "dashboard-view",
         "data-quality-view",
+        "logistics-operations-workspace",
         "reconciliation-view",
+        "shipment-operator-journey",
         "workspace-route"
       ],
       "owner": "Frontend",
@@ -861,7 +911,7 @@
         "apps/web/index.html",
         "apps/web/package.json"
       ],
-      "purpose": "Present the inventory, data-quality, reconciliation, analytics, planning, AI, reports, administration and audit workspaces to users as a React SPA served by the API in production.",
+      "purpose": "Present KYNOX Logix inventory intelligence and operator workspaces, including tenant-scoped shipment, provider, milestone, exception, POD-evidence and logistics-intelligence journeys, as a React SPA served by the API in production.",
       "sourceManifest": "apps/web/kaaf.module.json"
     }
   ],
@@ -1098,12 +1148,94 @@
         "system_admin"
       ],
       "sourceManifest": "apps/api/kaaf.module.json"
+    },
+    {
+      "action": "manage",
+      "confidence": "verified",
+      "domain": "logistics_operations",
+      "enforcedAt": [
+        "apps/api/src/middleware/auth.ts",
+        "apps/api/src/routes/operations.ts"
+      ],
+      "key": "manage_operations",
+      "module": "analytics-api",
+      "resource": "shipment lifecycle, events, exceptions and charges",
+      "roles": [
+        "system_admin",
+        "data_admin",
+        "supply_chain_manager"
+      ],
+      "sourceManifest": "apps/api/kaaf.module.json"
+    },
+    {
+      "action": "manage",
+      "confidence": "verified",
+      "domain": "logistics_operations",
+      "enforcedAt": [
+        "apps/api/src/middleware/auth.ts",
+        "apps/api/src/routes/operations.ts"
+      ],
+      "key": "manage_providers",
+      "module": "analytics-api",
+      "resource": "logistics provider",
+      "roles": [
+        "system_admin",
+        "data_admin",
+        "supply_chain_manager"
+      ],
+      "sourceManifest": "apps/api/kaaf.module.json"
+    },
+    {
+      "action": "create",
+      "confidence": "verified",
+      "domain": "logistics_operations",
+      "enforcedAt": [
+        "apps/api/src/middleware/auth.ts",
+        "apps/api/src/routes/operations.ts"
+      ],
+      "key": "record_pod",
+      "module": "analytics-api",
+      "resource": "POD metadata",
+      "roles": [
+        "system_admin",
+        "data_admin",
+        "supply_chain_manager",
+        "warehouse_manager"
+      ],
+      "sourceManifest": "apps/api/kaaf.module.json"
+    },
+    {
+      "action": "read",
+      "confidence": "verified",
+      "domain": "logistics_operations",
+      "enforcedAt": [
+        "apps/api/src/middleware/auth.ts",
+        "apps/api/src/routes/operations.ts"
+      ],
+      "key": "view_operations",
+      "module": "analytics-api",
+      "resource": "shipment and operations evidence",
+      "roles": [
+        "system_admin",
+        "data_admin",
+        "supply_chain_director",
+        "supply_chain_manager",
+        "inventory_manager",
+        "warehouse_manager",
+        "material_planner",
+        "inventory_controller",
+        "data_analyst",
+        "auditor",
+        "executive_viewer",
+        "read_only"
+      ],
+      "sourceManifest": "apps/api/kaaf.module.json"
     }
   ],
   "repository": {
     "defaultBranch": "main",
     "kaafPhase": 7,
-    "name": "Kynox Inventory Intelligence",
-    "repository": "Islamce/kynox-inventory-analytics"
+    "name": "KYNOX Logix",
+    "repository": "Islamce/kynox-logix"
   }
 }

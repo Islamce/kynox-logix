@@ -1,12 +1,12 @@
 {
   "_meta": {
     "artifact": "modules/analytics-logistics-engine.json",
-    "bodyDigest": "4640288d3245025de54e3dbf1259f8eafb1657d1b17ddd17c7dd466b217a8654",
+    "bodyDigest": "f9a324aa3b7f32236b8d7cd49cfc9a41815d83e7dc9acd4ad79af0f097d1e46f",
     "confidence": "verified",
     "doNotEdit": true,
     "generator": "kaaf",
     "generatorVersion": "0.7.0",
-    "inputDigest": "0c394c5d49ec9b7e9deb4ab45c75907afc3ae5da7a89709ea7101e8fbf79ba9d",
+    "inputDigest": "e9f05acc14e564063d65fd845fa5182c51267d1d265b80dc4f4e3a1ec742ed95",
     "provenanceNote": "Generated from the declared kaaf.repo.json and kaaf.module.json manifests. No wall-clock time or commit SHA is embedded: both would break byte-identical regeneration. Use git history for when and from which commit.",
     "schemaVersion": "1.0.0"
   },
@@ -15,7 +15,9 @@
   "confidenceReason": "Declared and corroborated by 8 discovered code file(s).",
   "declared": true,
   "declaredConfidence": "verified",
-  "dependedOnBy": [],
+  "dependedOnBy": [
+    "analytics-api"
+  ],
   "dependsOn": [
     "analytics-shared-types"
   ],

@@ -2,7 +2,7 @@
 
 # Component — analytics-api (C4 L3)
 
-`analytics-api` at `apps/api` — confidence `verified`. 3 declared public entry point(s), 4 dependency(ies), 0 dependent(s).
+`analytics-api` at `apps/api` — confidence `verified`. 3 declared public entry point(s), 5 dependency(ies), 0 dependent(s).
 
 ```mermaid
 graph TB
@@ -17,6 +17,8 @@ graph TB
   analytics_api_box --> analytics_data_quality
   analytics_engine["analytics-engine<br/>packages/analytics-engine<br/>verified"]
   analytics_api_box --> analytics_engine
+  analytics_logistics_engine["analytics-logistics-engine<br/>packages/logistics-engine<br/>verified"]
+  analytics_api_box --> analytics_logistics_engine
   analytics_shared_types["analytics-shared-types<br/>packages/shared-types<br/>verified"]
   analytics_api_box --> analytics_shared_types
 ```
@@ -26,4 +28,4 @@ graph TB
 - Solid arrow: a dependency declared in a `kaaf.module.json` manifest.
 - Dotted arrow: a real import discovered in the source that no manifest declares — see `.ai/drift.json`.
 - Node outline reflects confidence: solid = `verified`, dashed = `documented` or `derived`.
-<!-- kaaf:bodyDigest=302aa9265b6d14cc1f6bc0d166718bcd3b6b00dd2430b8939bd7e0cfabf2f412 -->
+<!-- kaaf:bodyDigest=c60f590733328921ac4a5ab78ea901d95aabf7145409175994aa945a1613750d -->

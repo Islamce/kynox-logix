@@ -1,12 +1,12 @@
 {
   "_meta": {
     "artifact": "drift.json",
-    "bodyDigest": "75be82578f9c1ce883166f098eb3bae7cf64988c2b373df268b78b86fc3e6154",
+    "bodyDigest": "692697e12d0731350610d3a73c00918bdb7ebf9fa1920e9939f9a949c2fdd524",
     "confidence": "derived",
     "doNotEdit": true,
     "generator": "kaaf",
     "generatorVersion": "0.7.0",
-    "inputDigest": "0c394c5d49ec9b7e9deb4ab45c75907afc3ae5da7a89709ea7101e8fbf79ba9d",
+    "inputDigest": "e9f05acc14e564063d65fd845fa5182c51267d1d265b80dc4f4e3a1ec742ed95",
     "provenanceNote": "Generated from the declared kaaf.repo.json and kaaf.module.json manifests. No wall-clock time or commit SHA is embedded: both would break byte-identical regeneration. Use git history for when and from which commit.",
     "schemaVersion": "1.0.0"
   },
@@ -17,7 +17,7 @@
     },
     "analytics-api": {
       "level": "verified",
-      "reason": "Declared and corroborated by 40 discovered code file(s)."
+      "reason": "Declared and corroborated by 45 discovered code file(s)."
     },
     "analytics-data-quality": {
       "level": "verified",
@@ -53,7 +53,7 @@
     },
     "analytics-web": {
       "level": "verified",
-      "reason": "Declared and corroborated by 29 discovered code file(s)."
+      "reason": "Declared and corroborated by 30 discovered code file(s)."
     }
   },
   "counts": {
@@ -110,6 +110,13 @@
       ],
       "from": "analytics-api",
       "to": "analytics-engine"
+    },
+    {
+      "evidence": [
+        "apps/api/src/routes/operations.ts"
+      ],
+      "from": "analytics-api",
+      "to": "analytics-logistics-engine"
     },
     {
       "evidence": [

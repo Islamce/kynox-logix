@@ -1,12 +1,12 @@
 {
   "_meta": {
     "artifact": "index/repository.json",
-    "bodyDigest": "dc339a5b1ecf88f6d101cd256d25a36f3ca8266de3d6e2db9a03f864995f1204",
+    "bodyDigest": "15a5cd0a91702fce34eeb0ec086b14c18e79609e394349456ba09179b2ccff30",
     "confidence": "derived",
     "doNotEdit": true,
     "generator": "kaaf",
     "generatorVersion": "0.7.0",
-    "inputDigest": "0c394c5d49ec9b7e9deb4ab45c75907afc3ae5da7a89709ea7101e8fbf79ba9d",
+    "inputDigest": "e9f05acc14e564063d65fd845fa5182c51267d1d265b80dc4f4e3a1ec742ed95",
     "provenanceNote": "Generated from the declared kaaf.repo.json and kaaf.module.json manifests. No wall-clock time or commit SHA is embedded: both would break byte-identical regeneration. Use git history for when and from which commit.",
     "schemaVersion": "1.0.0"
   },
@@ -17,7 +17,7 @@
       "kind": "rest",
       "module": "analytics-api",
       "path": "apps/api/src/routes/admin.ts",
-      "qualifiedId": "Islamce/kynox-inventory-analytics#analytics-api/admin-api",
+      "qualifiedId": "Islamce/kynox-logix#analytics-api/admin-api",
       "stability": "evolving",
       "version": "1"
     },
@@ -27,7 +27,7 @@
       "kind": "rest",
       "module": "analytics-api",
       "path": "apps/api/src/routes/ai.ts",
-      "qualifiedId": "Islamce/kynox-inventory-analytics#analytics-api/ai-api",
+      "qualifiedId": "Islamce/kynox-logix#analytics-api/ai-api",
       "stability": "experimental",
       "version": "1"
     },
@@ -37,7 +37,7 @@
       "kind": "rest",
       "module": "analytics-api",
       "path": "apps/api/src/routes/analytics.ts",
-      "qualifiedId": "Islamce/kynox-inventory-analytics#analytics-api/analytics-api-surface",
+      "qualifiedId": "Islamce/kynox-logix#analytics-api/analytics-api-surface",
       "stability": "evolving",
       "version": "1"
     },
@@ -47,7 +47,7 @@
       "kind": "rest",
       "module": "analytics-api",
       "path": "apps/api/src/routes/auth.ts",
-      "qualifiedId": "Islamce/kynox-inventory-analytics#analytics-api/auth-api",
+      "qualifiedId": "Islamce/kynox-logix#analytics-api/auth-api",
       "stability": "stable",
       "version": "1"
     },
@@ -57,7 +57,7 @@
       "kind": "rest",
       "module": "analytics-api",
       "path": "apps/api/src/routes/datasets.ts",
-      "qualifiedId": "Islamce/kynox-inventory-analytics#analytics-api/datasets-api",
+      "qualifiedId": "Islamce/kynox-logix#analytics-api/datasets-api",
       "stability": "evolving",
       "version": "1"
     },
@@ -67,7 +67,17 @@
       "kind": "rest",
       "module": "analytics-api",
       "path": "apps/api/src/routes/exports.ts",
-      "qualifiedId": "Islamce/kynox-inventory-analytics#analytics-api/exports-api",
+      "qualifiedId": "Islamce/kynox-logix#analytics-api/exports-api",
+      "stability": "evolving",
+      "version": "1"
+    },
+    {
+      "confidence": "verified",
+      "id": "logix-operations-api",
+      "kind": "rest",
+      "module": "analytics-api",
+      "path": "apps/api/src/routes/operations.ts",
+      "qualifiedId": "Islamce/kynox-logix#analytics-api/logix-operations-api",
       "stability": "evolving",
       "version": "1"
     },
@@ -77,7 +87,7 @@
       "kind": "rest",
       "module": "analytics-api",
       "path": "apps/api/src/routes/maintenance.ts",
-      "qualifiedId": "Islamce/kynox-inventory-analytics#analytics-api/maintenance-api",
+      "qualifiedId": "Islamce/kynox-logix#analytics-api/maintenance-api",
       "stability": "experimental",
       "version": "1"
     },
@@ -87,7 +97,7 @@
       "kind": "rest",
       "module": "analytics-api",
       "path": "apps/api/src/routes/uploads.ts",
-      "qualifiedId": "Islamce/kynox-inventory-analytics#analytics-api/uploads-api",
+      "qualifiedId": "Islamce/kynox-logix#analytics-api/uploads-api",
       "stability": "evolving",
       "version": "1"
     }
@@ -154,7 +164,7 @@
       "owner": "AI Engineering",
       "path": "packages/ai-engine",
       "purpose": "Run the documented analytics agents over evidence packages built from verified data, behind a provider abstraction so no single vendor is load-bearing.",
-      "qualifiedId": "Islamce/kynox-inventory-analytics#analytics-ai-engine"
+      "qualifiedId": "Islamce/kynox-logix#analytics-ai-engine"
     },
     {
       "confidence": "verified",
@@ -164,6 +174,7 @@
         "analytics-ai-engine",
         "analytics-data-quality",
         "analytics-engine",
+        "analytics-logistics-engine",
         "analytics-shared-types"
       ],
       "id": "analytics-api",
@@ -174,19 +185,29 @@
         "config",
         "dataset",
         "export",
+        "freight_charge",
+        "logistics_event",
+        "logistics_exception",
+        "logistics_idempotency",
+        "logistics_provider",
         "material_master",
         "movement",
         "physical_inventory",
+        "shipment",
+        "shipment_leg",
+        "shipment_pod",
+        "shipment_reference",
         "stock_item",
         "tenant",
         "tenant_membership",
+        "transport_requirement",
         "upload",
         "user"
       ],
       "owner": "Backend",
       "path": "apps/api",
-      "purpose": "Serve the inventory diagnostic over HTTP: resolve fail-closed tenant and membership context, ingest and version tenant-owned datasets, normalize them into the canonical transaction model, enforce tenant-scoped role-based access, and expose analytics, reconciliation, export, and preview-only logistics import mapping and quality surfaces. Logistics persistence remains gated.",
-      "qualifiedId": "Islamce/kynox-inventory-analytics#analytics-api"
+      "purpose": "Serve KYNOX Logix over HTTP: resolve fail-closed tenant and membership context, preserve governed inventory diagnostics and analytics, and operate tenant-scoped transport requirements, shipments, providers, lifecycle events, exceptions, POD metadata, freight operational context and deterministic logistics intelligence.",
+      "qualifiedId": "Islamce/kynox-logix#analytics-api"
     },
     {
       "confidence": "verified",
@@ -207,7 +228,7 @@
       "owner": "Data",
       "path": "packages/data-quality",
       "purpose": "Score incoming customer data, propose and apply cleansing, and normalize ambiguous values such as dates so downstream analytics receive evidence-tagged input.",
-      "qualifiedId": "Islamce/kynox-inventory-analytics#analytics-data-quality"
+      "qualifiedId": "Islamce/kynox-logix#analytics-data-quality"
     },
     {
       "confidence": "verified",
@@ -224,7 +245,7 @@
       "owner": "DevOps",
       "path": "scripts/deployment",
       "purpose": "Carry out staged deployment and its safety operations — preflight checks, database backup and restore, rollback, and post-deploy smoke tests. Executing any of these against a real environment is a protected action requiring approval.",
-      "qualifiedId": "Islamce/kynox-inventory-analytics#analytics-deployment"
+      "qualifiedId": "Islamce/kynox-logix#analytics-deployment"
     },
     {
       "confidence": "verified",
@@ -248,7 +269,7 @@
       "owner": "Data",
       "path": "packages/analytics-engine",
       "purpose": "Compute the inventory analytics the product sells — ABC, XYZ, aging, consumption, excess, shortage, health, forecasting and planning — as pure functions over canonical transactions.",
-      "qualifiedId": "Islamce/kynox-inventory-analytics#analytics-engine"
+      "qualifiedId": "Islamce/kynox-logix#analytics-engine"
     },
     {
       "confidence": "verified",
@@ -262,7 +283,7 @@
       "owner": "Data",
       "path": "scripts",
       "purpose": "Generate synthetic UAT and demonstration datasets so the platform can be exercised without customer data.",
-      "qualifiedId": "Islamce/kynox-inventory-analytics#analytics-fixtures"
+      "qualifiedId": "Islamce/kynox-logix#analytics-fixtures"
     },
     {
       "confidence": "verified",
@@ -276,7 +297,7 @@
       "owner": "DevOps",
       "path": "scripts/architecture",
       "purpose": "Generate and validate this repository's KAAF architecture context. Vendored from Islamce/KAAF; see VENDORED.md before changing anything here.",
-      "qualifiedId": "Islamce/kynox-inventory-analytics#analytics-kaaf-tooling"
+      "qualifiedId": "Islamce/kynox-logix#analytics-kaaf-tooling"
     },
     {
       "confidence": "verified",
@@ -301,7 +322,7 @@
       "owner": "Data",
       "path": "packages/logistics-engine",
       "purpose": "Compute bounded Logistics Intelligence metrics as pure, evidence-oriented functions without owning warehouse execution, project/WBS truth, or transport execution.",
-      "qualifiedId": "Islamce/kynox-inventory-analytics#analytics-logistics-engine"
+      "qualifiedId": "Islamce/kynox-logix#analytics-logistics-engine"
     },
     {
       "confidence": "verified",
@@ -315,7 +336,7 @@
       "owner": "DevOps",
       "path": ".",
       "purpose": "Start the production process: boot the API, which also serves the built web SPA, under the PM2 configuration used on the managed host.",
-      "qualifiedId": "Islamce/kynox-inventory-analytics#analytics-runtime-entry"
+      "qualifiedId": "Islamce/kynox-logix#analytics-runtime-entry"
     },
     {
       "confidence": "verified",
@@ -327,17 +348,23 @@
         "canonical-transaction-category",
         "logistics-contract",
         "logistics-decision-object",
+        "logistics-event-contract",
+        "logistics-exception-contract",
+        "logistics-operation-contract",
+        "logistics-provider-contract",
         "permission",
+        "pod-metadata-contract",
         "r4c-requirement-reference",
         "role",
         "role-permission-matrix",
         "shared-api-dto",
+        "shipment-lifecycle-contract",
         "warehouse-read-model"
       ],
       "owner": "Backend",
       "path": "packages/shared-types",
-      "purpose": "Define the types, canonical transaction vocabulary, and the single role-to-permission matrix that every other module in the platform shares.",
-      "qualifiedId": "Islamce/kynox-inventory-analytics#analytics-shared-types"
+      "purpose": "Define shared canonical transaction and logistics-operation vocabulary, read-only WMS/R4C references, and the single role-to-permission matrix used by all Logix modules.",
+      "qualifiedId": "Islamce/kynox-logix#analytics-shared-types"
     },
     {
       "confidence": "verified",
@@ -348,13 +375,15 @@
       "ownedEntities": [
         "dashboard-view",
         "data-quality-view",
+        "logistics-operations-workspace",
         "reconciliation-view",
+        "shipment-operator-journey",
         "workspace-route"
       ],
       "owner": "Frontend",
       "path": "apps/web",
-      "purpose": "Present the inventory, data-quality, reconciliation, analytics, planning, AI, reports, administration and audit workspaces to users as a React SPA served by the API in production.",
-      "qualifiedId": "Islamce/kynox-inventory-analytics#analytics-web"
+      "purpose": "Present KYNOX Logix inventory intelligence and operator workspaces, including tenant-scoped shipment, provider, milestone, exception, POD-evidence and logistics-intelligence journeys, as a React SPA served by the API in production.",
+      "qualifiedId": "Islamce/kynox-logix#analytics-web"
     }
   ],
   "permissions": [
@@ -502,13 +531,63 @@
       "roles": [
         "system_admin"
       ]
+    },
+    {
+      "confidence": "verified",
+      "key": "manage_operations",
+      "module": "analytics-api",
+      "roles": [
+        "system_admin",
+        "data_admin",
+        "supply_chain_manager"
+      ]
+    },
+    {
+      "confidence": "verified",
+      "key": "manage_providers",
+      "module": "analytics-api",
+      "roles": [
+        "system_admin",
+        "data_admin",
+        "supply_chain_manager"
+      ]
+    },
+    {
+      "confidence": "verified",
+      "key": "record_pod",
+      "module": "analytics-api",
+      "roles": [
+        "system_admin",
+        "data_admin",
+        "supply_chain_manager",
+        "warehouse_manager"
+      ]
+    },
+    {
+      "confidence": "verified",
+      "key": "view_operations",
+      "module": "analytics-api",
+      "roles": [
+        "system_admin",
+        "data_admin",
+        "supply_chain_director",
+        "supply_chain_manager",
+        "inventory_manager",
+        "warehouse_manager",
+        "material_planner",
+        "inventory_controller",
+        "data_analyst",
+        "auditor",
+        "executive_viewer",
+        "read_only"
+      ]
     }
   ],
   "repository": {
     "defaultBranch": "main",
-    "description": "Kynox Inventory Intelligence — a source-neutral inventory diagnostic that ingests customer exports, normalizes them into a canonical transaction model, and serves data-quality, reconciliation, and inventory analytics.",
+    "description": "KYNOX Logix — a tenant-scoped logistics operations, 3PL management and future 4PL orchestration platform with embedded KYNOX intelligence. It retains governed inventory analytics while owning transport requirements, shipments, provider coordination, operational events, exceptions, POD metadata and freight operational context.",
     "kaafPhase": 7,
-    "name": "Kynox Inventory Intelligence",
-    "repository": "Islamce/kynox-inventory-analytics"
+    "name": "KYNOX Logix",
+    "repository": "Islamce/kynox-logix"
   }
 }

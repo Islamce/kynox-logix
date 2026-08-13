@@ -21,6 +21,7 @@ graph LR
   analytics_api --> analytics_ai_engine
   analytics_api --> analytics_data_quality
   analytics_api --> analytics_engine
+  analytics_api --> analytics_logistics_engine
   analytics_api --> analytics_shared_types
   analytics_data_quality --> analytics_shared_types
   analytics_engine --> analytics_shared_types
@@ -43,4 +44,4 @@ graph LR
 - Solid arrow: a dependency declared in a `kaaf.module.json` manifest.
 - Dotted arrow: a real import discovered in the source that no manifest declares — see `.ai/drift.json`.
 - Node outline reflects confidence: solid = `verified`, dashed = `documented` or `derived`.
-<!-- kaaf:bodyDigest=d09288ff961c581a646156952e04edd128da7e51a3be4f7b06030583322192fd -->
+<!-- kaaf:bodyDigest=398ea8080e9b1d00012fed1cb461ac45785774edc0003dca1d184a984e4832ea -->
