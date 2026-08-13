@@ -341,6 +341,16 @@ describe('analytics', () => {
       .set('Authorization', `Bearer ${token}`);
     expect(res.status).toBe(400);
   });
+
+  it('serves the trend series with the anchor dataset as its only point', async () => {
+    const res = await request(app)
+      .get(`/api/analytics/trend/${stockDatasetId}`)
+      .set('Authorization', `Bearer ${token}`);
+    expect(res.status).toBe(200);
+    expect(res.body.points).toHaveLength(1);
+    expect(res.body.points[0].datasetId).toBe(stockDatasetId);
+    expect(res.body.points[0].healthScore).toBeGreaterThan(0);
+  });
 });
 
 describe('AI governance', () => {

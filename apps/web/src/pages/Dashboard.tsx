@@ -4,7 +4,7 @@ import { apiGet, apiSend } from '../lib/api';
 import { useWorkspaceIds } from '../components/Layout';
 import { Card, DataTable, EmptyState, ErrorState, Kpi, Spinner, Badge, PageHeader } from '../components/ui';
 import { StatTile } from '../components/intelligence';
-import { Chart, SEQUENTIAL_BLUE } from '../components/Chart';
+import { Chart, SEQUENTIAL_BLUE, SERIES_COLORS } from '../components/Chart';
 
 interface DashboardData {
   dataset: { id: number; name: string; periodStart: string | null; periodEnd: string | null };
@@ -156,8 +156,103 @@ export function DashboardPage() {
         </Card>
       </div>
 
+      <TrendCard stockDatasetId={ws.stockDatasetId} />
+
       {ws.movementsDatasetId && <MovementCategoriesCard movementsDatasetId={ws.movementsDatasetId} />}
     </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Trend: headline KPIs across prior stock snapshots for the same company/
+// plant series, so the exec view shows direction of travel, not just a
+// single point-in-time read.
+// ---------------------------------------------------------------------------
+
+interface TrendPoint {
+  datasetId: number;
+  name: string;
+  periodEnd: string | null;
+  createdAt: string;
+  totalValue: number;
+  totalMaterials: number;
+  healthScore: number | null;
+  criticalShortages: number;
+  shortageMaterials: number;
+}
+
+function TrendCard({ stockDatasetId }: { stockDatasetId: number }) {
+  const [points, setPoints] = useState<TrendPoint[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    setError(null);
+    apiGet<{ points: TrendPoint[] }>(`/api/analytics/trend/${stockDatasetId}`)
+      .then((r) => setPoints(r.points))
+      .catch((e) => setError(e instanceof Error ? e.message : 'Failed to load trend'))
+      .finally(() => setLoading(false));
+  }, [stockDatasetId]);
+
+  if (loading) return <Card title="Trend"><Spinner label="Loading trend…" /></Card>;
+  if (error) return null; // non-critical secondary view — don't block the dashboard on it
+  if (!points || points.length < 2) return null; // need at least two snapshots to show direction
+
+  const labels = points.map((p) => p.periodEnd ?? p.createdAt.slice(0, 10));
+
+  return (
+    <Card title="Trend across snapshots" subtitle={`Last ${points.length} stock datasets for this company/plant, oldest → newest`}>
+      <div className="grid lg:grid-cols-2 gap-4">
+        <Chart option={{
+          xAxis: { type: 'category', data: labels, axisLabel: { rotate: 20 } },
+          yAxis: [
+            { type: 'value', name: 'Health /100', min: 0, max: 100 },
+            { type: 'value', name: 'Value' },
+          ],
+          legend: { data: ['Inventory health', 'Total value'] },
+          series: [
+            {
+              name: 'Inventory health',
+              type: 'line',
+              yAxisIndex: 0,
+              data: points.map((p) => p.healthScore),
+              itemStyle: { color: SERIES_COLORS[1] },
+              smooth: true,
+            },
+            {
+              name: 'Total value',
+              type: 'line',
+              yAxisIndex: 1,
+              data: points.map((p) => Math.round(p.totalValue * 100) / 100),
+              itemStyle: { color: SERIES_COLORS[0] },
+              smooth: true,
+            },
+          ],
+        }} />
+        <Chart option={{
+          xAxis: { type: 'category', data: labels, axisLabel: { rotate: 20 } },
+          yAxis: { type: 'value', name: 'Materials' },
+          legend: { data: ['Critical shortages', 'All shortage-risk'] },
+          series: [
+            {
+              name: 'All shortage-risk',
+              type: 'bar',
+              data: points.map((p) => p.shortageMaterials),
+              itemStyle: { color: SERIES_COLORS[3], borderRadius: [4, 4, 0, 0] },
+              barMaxWidth: 32,
+            },
+            {
+              name: 'Critical shortages',
+              type: 'bar',
+              data: points.map((p) => p.criticalShortages),
+              itemStyle: { color: SERIES_COLORS[7], borderRadius: [4, 4, 0, 0] },
+              barMaxWidth: 32,
+            },
+          ],
+        }} />
+      </div>
+    </Card>
   );
 }
 
