@@ -13,7 +13,7 @@
 | Production domain | `https://logix.kynox.io` |
 | Deployment model | Hostinger Managed Node.js Web App + isolated MySQL, subject to current Hostinger capability verification |
 | API/runtime | Existing Node.js/Express application |
-| Mobile client | Flutter Android client, source/analyze/test/debug-APK qualified; signed release and critical journeys pending |
+| Mobile client | Flutter Android client, source/analyze/test/debug/release APK qualified; signing and critical journeys pending |
 | Database | Isolated LOGIX database, logically named `kynox_logix` in the environment template |
 
 ## Repository Evidence
@@ -56,14 +56,14 @@ No production secrets, signing keys, domain cutover, database migration, or exte
 | Flutter analyze | PASS | `flutter analyze` reported no issues |
 | Flutter tests | PASS | `flutter test`: all tests passed |
 | Android debug APK | PASS | `build/app/outputs/flutter-apk/app-debug.apk` produced |
-| Android release APK | NOT QUALIFIED | Gradle daemon disappeared under current memory pressure; no signed release artifact is claimed |
+| Android release APK | PASS / SIGNING PENDING | `flutter build apk --release` produced `app-release.apk` using safe test signing; no production key was used |
 | Flutter SDK | PASS | Flutter 3.47.0 stable with Dart 3.13.0 installed from the official stable channel |
 | Hostinger capability | NOT VERIFIED | No Hostinger panel/session evidence or deployment credentials were available |
 | Production database | NOT VERIFIED | No isolated Hostinger MySQL instance or connection evidence was available |
 | Backup restore | NOT VERIFIED | No backup/restore execution against a validation database was available |
 | Production runtime | NOT VERIFIED | No temporary-host deployment evidence was available |
 
-The recovered qualification lane is now green for local code evidence. Under Node 22.13.0 and npm 10.9.2, the optional `better-sqlite3` module was rebuilt from source after installing the local compiler toolchain. The ordered package build, typecheck, full build, and full test suite passed; the final test result was 9 files and 98 tests passed. Added production startup-guard tests verify MySQL and PostgreSQL acceptance, SQLite rejection, unset `DB_CLIENT` rejection, and missing credential rejection. Flutter 3.47.0 / Dart 3.13.0 passed `pub get`, `analyze`, and unit tests. Android tooling was installed, and a debug APK was produced. The release APK attempt was not qualified because the Gradle daemon disappeared under current sandbox memory pressure; no signed release artifact is claimed. These local results do not replace live Hostinger, MySQL, persistence, backup/restore, or UAT evidence.
+The recovered qualification lane is green for local code evidence. Under Node 22.13.0 and npm 10.9.2, the optional `better-sqlite3` module was rebuilt from source after installing the local compiler toolchain. The ordered package build, typecheck, full build, and full test suite passed; the final test result was 9 files and 98 tests passed. Added production startup-guard tests verify MySQL and PostgreSQL acceptance, SQLite rejection, unset `DB_CLIENT` rejection, and missing credential rejection. Flutter 3.47.0 / Dart 3.13.0 passed `pub get`, `analyze`, and unit tests. Android tooling was installed, and both debug and release APKs were produced using safe test signing. The release build uses portable Gradle settings; no production signing key is present. Added GitHub Actions workflows define the required disposable MySQL parity lane and Flutter lane, but remote execution is still pending PR creation. These local results do not replace live Hostinger, MySQL, persistence, backup/restore, or UAT evidence.
 
 ## Mandatory Release Gates
 
@@ -78,8 +78,9 @@ The recovered qualification lane is now green for local code evidence. Under Nod
 | Persistent storage | Upload/import/redeploy/recovery test proves files and lineage survive | OPEN |
 | Temporary deployment | Temporary Hostinger URL with health, readiness, version, runtime, and logs evidence | OPEN |
 | UAT | Web critical journeys pass | OPEN |
-| Flutter client | Flutter analyze, tests, debug/release build, and critical journeys pass | PARTIAL: analyze/tests/debug APK pass; release/critical journeys open |
+| Flutter client | Flutter analyze, tests, debug/release build, and critical journeys pass | PARTIAL: analyze/tests/debug/release APK pass; critical journeys open |
 | Backup/restore | SQL backup restored to a separate validation database and checked | OPEN |
+| Remote CI | Exact-PR MySQL parity and Flutter workflows | PENDING PR execution |
 | Production cutover | Founder-approved domain attach and SSL verification | OWNER ACTION REQUIRED |
 
 ## Deployment Procedure After Local Gates Pass
@@ -90,7 +91,7 @@ Only after every hard gate passes and the Founder explicitly approves the cutove
 
 ## Decision
 
-**NO-GO.** Local code qualification has materially recovered: typecheck, full build, 98 backend tests, production startup guards, Flutter analyze/tests, and a debug APK pass. The release remains blocked by missing live MySQL production-parity runtime evidence, Hostinger capability/deployment evidence, persistent storage validation, backup/restore, end-to-end UAT, Flutter critical journeys, and a release APK/signing outcome. No production deployment or domain cutover should occur until those gates are independently recorded.
+**NO-GO.** Local code qualification has materially recovered: typecheck, full build, 98 backend tests, production startup guards, Flutter analyze/tests, and both debug/release APK builds pass. The release remains blocked by remote disposable-MySQL workflow execution, Hostinger capability/deployment evidence, persistent storage validation, backup/restore, end-to-end UAT, Flutter critical journeys, and production signing ownership. No production deployment or domain cutover should occur until those gates are independently recorded.
 
 ## Owner-Only Actions
 

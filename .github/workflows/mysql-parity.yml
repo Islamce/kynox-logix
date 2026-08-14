@@ -1,0 +1,112 @@
+name: MySQL production parity
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, 'manus/**']
+
+jobs:
+  mysql-parity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: kynox_logix_ci
+          MYSQL_USER: logix_ci
+          MYSQL_PASSWORD: logix_ci_password
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -uroot -proot"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=20
+
+    env:
+      NODE_ENV: test
+      DB_CLIENT: mysql2
+      DB_HOST: 127.0.0.1
+      DB_PORT: 3306
+      DB_NAME: kynox_logix_ci
+      DB_USER: logix_ci
+      DB_PASSWORD: logix_ci_password
+      JWT_SECRET: test-only-logix-jwt-secret-with-more-than-32-characters
+      CORS_ORIGIN: http://127.0.0.1:4000
+      UPLOAD_DIR: ${{ runner.temp }}/logix-uploads
+      EXPORT_DIR: ${{ runner.temp }}/logix-exports
+      AI_PROVIDER: none
+      ENABLE_INPROCESS_CLEANUP: 'false'
+      ADMIN_EMAIL: admin@kynox.io
+      ADMIN_INITIAL_PASSWORD: test-only-admin-password
+
+    steps:
+      - name: Checkout exact PR SHA
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Build and typecheck
+        run: |
+          npm run build:packages
+          npm run typecheck
+          npm run build
+
+      - name: Run full backend suite against MySQL
+        run: npm test
+
+      - name: Run controlled migrations and seed
+        env:
+          NODE_ENV: production
+          APP_ENV: ci-mysql
+          RELEASE_SHA: ${{ github.sha }}
+          CORS_ORIGIN: http://127.0.0.1:4000
+        run: |
+          npm run migrate
+          npm run seed
+
+      - name: Start production-mode API
+        env:
+          NODE_ENV: production
+          APP_ENV: ci-mysql
+          RELEASE_SHA: ${{ github.sha }}
+          PORT: 4000
+          CORS_ORIGIN: http://127.0.0.1:4000
+        run: |
+          nohup npm start > "$RUNNER_TEMP/logix-api.log" 2>&1 &
+          echo $! > "$RUNNER_TEMP/logix-api.pid"
+
+      - name: Verify runtime identity and real MySQL readiness
+        run: |
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:4000/api/readiness >/tmp/logix-readiness.json; then
+              break
+            fi
+            sleep 2
+          done
+          test "$(cat /tmp/logix-readiness.json)" = '{"status":"ready"}'
+          curl --fail --silent http://127.0.0.1:4000/api/health | tee /tmp/logix-health.json
+          curl --fail --silent http://127.0.0.1:4000/api/version | tee /tmp/logix-version.json
+          grep -F '"releaseSha":"${{ github.sha }}"' /tmp/logix-version.json
+          grep -F '"environment":"ci-mysql"' /tmp/logix-version.json
+
+      - name: Collect API logs on failure
+        if: failure()
+        run: cat "$RUNNER_TEMP/logix-api.log" || true
+
+      - name: Stop API
+        if: always()
+        run: |
+          if [ -f "$RUNNER_TEMP/logix-api.pid" ]; then
+            kill "$(cat "$RUNNER_TEMP/logix-api.pid")" || true
+          fi
