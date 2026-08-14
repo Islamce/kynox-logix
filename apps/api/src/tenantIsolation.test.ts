@@ -7,8 +7,10 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'kynox-tenant-'));
-process.env.DB_CLIENT = 'better-sqlite3';
-process.env.DB_FILE = path.join(tmpDir, 'tenant.sqlite');
+if (!process.env.DB_CLIENT || process.env.DB_CLIENT === 'better-sqlite3') {
+  process.env.DB_CLIENT = 'better-sqlite3';
+  process.env.DB_FILE = path.join(tmpDir, 'tenant.sqlite');
+}
 process.env.JWT_SECRET = 'tenant-isolation-test-secret';
 process.env.UPLOAD_DIR = path.join(tmpDir, 'uploads');
 process.env.EXPORT_DIR = path.join(tmpDir, 'exports');

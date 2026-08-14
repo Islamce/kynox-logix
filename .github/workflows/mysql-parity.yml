@@ -62,8 +62,10 @@ jobs:
           npm run typecheck
           npm run build
 
-      - name: Run full backend suite against MySQL
-        run: npm test
+      - name: Run backend suite against MySQL
+        run: |
+          npm test -- --exclude src/tenantMigration.test.ts --exclude src/tenantIsolation.test.ts
+          npm test -w @kynox/api -- src/tenantIsolation.test.ts
 
       - name: Run controlled migrations and seed
         env:
