@@ -1,12 +1,12 @@
 {
   "_meta": {
     "artifact": "drift.json",
-    "bodyDigest": "75be82578f9c1ce883166f098eb3bae7cf64988c2b373df268b78b86fc3e6154",
+    "bodyDigest": "de29bb06a412a9f9047ceb0c5cd1bcc693a934d51c56aecc2dbb50dc05a21580",
     "confidence": "derived",
     "doNotEdit": true,
     "generator": "kaaf",
     "generatorVersion": "0.7.0",
-    "inputDigest": "0c394c5d49ec9b7e9deb4ab45c75907afc3ae5da7a89709ea7101e8fbf79ba9d",
+    "inputDigest": "45a7020d81b022f2fab239b3dd5935556e9d3ee37aeed643d95c4a0e11bc1c98",
     "provenanceNote": "Generated from the declared kaaf.repo.json and kaaf.module.json manifests. No wall-clock time or commit SHA is embedded: both would break byte-identical regeneration. Use git history for when and from which commit.",
     "schemaVersion": "1.0.0"
   },
@@ -17,7 +17,7 @@
     },
     "analytics-api": {
       "level": "verified",
-      "reason": "Declared and corroborated by 40 discovered code file(s)."
+      "reason": "Declared and corroborated by 41 discovered code file(s)."
     },
     "analytics-data-quality": {
       "level": "verified",
@@ -41,11 +41,11 @@
     },
     "analytics-logistics-engine": {
       "level": "verified",
-      "reason": "Declared and corroborated by 8 discovered code file(s)."
+      "reason": "Declared and corroborated by 10 discovered code file(s)."
     },
     "analytics-runtime-entry": {
       "level": "verified",
-      "reason": "Declared and corroborated by 2 discovered code file(s)."
+      "reason": "Declared and corroborated by 8 discovered code file(s)."
     },
     "analytics-shared-types": {
       "level": "verified",

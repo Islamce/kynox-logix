@@ -1,12 +1,12 @@
 {
   "_meta": {
     "artifact": "architecture.json",
-    "bodyDigest": "6a10d3f615d833448a5595ce60c379233471c56730cf845d5fa970822b4c366c",
+    "bodyDigest": "658fb41428582ba170e7c66751001b211c28702068b4052a626caa66b7950feb",
     "confidence": "verified",
     "doNotEdit": true,
     "generator": "kaaf",
     "generatorVersion": "0.7.0",
-    "inputDigest": "0c394c5d49ec9b7e9deb4ab45c75907afc3ae5da7a89709ea7101e8fbf79ba9d",
+    "inputDigest": "45a7020d81b022f2fab239b3dd5935556e9d3ee37aeed643d95c4a0e11bc1c98",
     "provenanceNote": "Generated from the declared kaaf.repo.json and kaaf.module.json manifests. No wall-clock time or commit SHA is embedded: both would break byte-identical regeneration. Use git history for when and from which commit.",
     "schemaVersion": "1.0.0"
   },
@@ -376,7 +376,7 @@
     },
     {
       "confidence": "verified",
-      "confidenceReason": "Declared and corroborated by 40 discovered code file(s).",
+      "confidenceReason": "Declared and corroborated by 41 discovered code file(s).",
       "declared": true,
       "declaredConfidence": "verified",
       "dependedOnBy": [],
@@ -387,7 +387,7 @@
         "analytics-shared-types"
       ],
       "discovery": {
-        "codeFileCount": 40,
+        "codeFileCount": 41,
         "discovered": true,
         "entryPoints": [],
         "languages": [
@@ -399,7 +399,7 @@
         "publicSymbols": [
           "createApp"
         ],
-        "sourceFileCount": 43
+        "sourceFileCount": 44
       },
       "id": "analytics-api",
       "ownedEntities": [
@@ -639,7 +639,7 @@
     },
     {
       "confidence": "verified",
-      "confidenceReason": "Declared and corroborated by 8 discovered code file(s).",
+      "confidenceReason": "Declared and corroborated by 10 discovered code file(s).",
       "declared": true,
       "declaredConfidence": "verified",
       "dependedOnBy": [],
@@ -647,7 +647,7 @@
         "analytics-shared-types"
       ],
       "discovery": {
-        "codeFileCount": 8,
+        "codeFileCount": 10,
         "discovered": true,
         "entryPoints": [],
         "languages": [
@@ -670,7 +670,7 @@
           "totalFreightByCurrency",
           "transitVarianceMinutes"
         ],
-        "sourceFileCount": 11
+        "sourceFileCount": 13
       },
       "id": "analytics-logistics-engine",
       "ownedEntities": [
@@ -696,16 +696,20 @@
     },
     {
       "confidence": "verified",
-      "confidenceReason": "Declared and corroborated by 2 discovered code file(s).",
+      "confidenceReason": "Declared and corroborated by 8 discovered code file(s).",
       "declared": true,
       "declaredConfidence": "verified",
       "dependedOnBy": [],
       "dependsOn": [],
       "discovery": {
-        "codeFileCount": 2,
+        "codeFileCount": 8,
         "discovered": true,
-        "entryPoints": [],
+        "entryPoints": [
+          "apps/mobile/lib/main.dart",
+          "apps/mobile/test/api_client_test.dart"
+        ],
         "languages": [
+          "dart",
           "javascript",
           "json",
           "markdown",
@@ -713,7 +717,7 @@
         ],
         "parseErrors": [],
         "publicSymbols": [],
-        "sourceFileCount": 43
+        "sourceFileCount": 56
       },
       "id": "analytics-runtime-entry",
       "ownedEntities": [

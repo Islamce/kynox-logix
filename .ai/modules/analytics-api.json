@@ -1,12 +1,12 @@
 {
   "_meta": {
     "artifact": "modules/analytics-api.json",
-    "bodyDigest": "0421ab738392ace6a8c2712eed1e430f1882e4a388b8d81df05ebe66ae356024",
+    "bodyDigest": "1c588e30d30faf76326432346a84886998cc7c2d27c2f09ba5959159c47da3be",
     "confidence": "verified",
     "doNotEdit": true,
     "generator": "kaaf",
     "generatorVersion": "0.7.0",
-    "inputDigest": "0c394c5d49ec9b7e9deb4ab45c75907afc3ae5da7a89709ea7101e8fbf79ba9d",
+    "inputDigest": "45a7020d81b022f2fab239b3dd5935556e9d3ee37aeed643d95c4a0e11bc1c98",
     "provenanceNote": "Generated from the declared kaaf.repo.json and kaaf.module.json manifests. No wall-clock time or commit SHA is embedded: both would break byte-identical regeneration. Use git history for when and from which commit.",
     "schemaVersion": "1.0.0"
   },
@@ -93,7 +93,7 @@
     }
   ],
   "confidence": "verified",
-  "confidenceReason": "Declared and corroborated by 40 discovered code file(s).",
+  "confidenceReason": "Declared and corroborated by 41 discovered code file(s).",
   "declared": true,
   "declaredConfidence": "verified",
   "dependedOnBy": [],
@@ -108,6 +108,7 @@
       "apps/api/knexfile.js",
       "apps/api/src/app.test.ts",
       "apps/api/src/app.ts",
+      "apps/api/src/config.production.test.ts",
       "apps/api/src/config.ts",
       "apps/api/src/db/index.ts",
       "apps/api/src/db/migrations/20260719000001_initial_schema.js",
@@ -163,6 +164,7 @@
       "apps/api/package.json",
       "apps/api/src/app.test.ts",
       "apps/api/src/app.ts",
+      "apps/api/src/config.production.test.ts",
       "apps/api/src/config.ts",
       "apps/api/src/db/index.ts",
       "apps/api/src/db/migrations/20260719000001_initial_schema.js",
