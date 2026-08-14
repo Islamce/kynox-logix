@@ -36,8 +36,8 @@ jobs:
       DB_PASSWORD: logix_ci_password
       JWT_SECRET: test-only-logix-jwt-secret-with-more-than-32-characters
       CORS_ORIGIN: http://127.0.0.1:4000
-      UPLOAD_DIR: ${{ runner.temp }}/logix-uploads
-      EXPORT_DIR: ${{ runner.temp }}/logix-exports
+      UPLOAD_DIR: /tmp/logix-uploads
+      EXPORT_DIR: /tmp/logix-exports
       AI_PROVIDER: none
       ENABLE_INPROCESS_CLEANUP: 'false'
       ADMIN_EMAIL: admin@kynox.io
