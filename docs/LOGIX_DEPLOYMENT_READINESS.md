@@ -18,7 +18,7 @@
 
 ## Repository Evidence
 
-The audit was performed against the local clone on 14 August 2026. The checked-out base was `main` at `cd847997358a869fb0b51a43586d5b29b4b7463c`; the controlled qualification branch is `manus/logix-readiness-recovery`; the exact remote-qualified candidate is `cdc18c23f2d1f3cc8dd6ed3531db23773beb7a67`; and the controlled pull request is PR #3. The branch includes the open PR #2 adapter commit as local commit `4c6aa48`. The repository was clean before qualification changes. PR #2, `feat: add logistics compatibility adapter`, remains open from `feat/logistics-compatibility-adapter` into `main`; readiness PR #3 is open from `manus/logix-readiness-recovery` into `main`.
+The audit was performed against the local clone on 14 August 2026. The checked-out base was `main` at `cd847997358a869fb0b51a43586d5b29b4b7463c`; the controlled qualification branch is `manus/logix-readiness-recovery`; the exact remote-qualified candidate is `9b57f29318caba39cddc2e975996ce30145ba634`; and the controlled pull request is PR #3. The branch includes the open PR #2 adapter commit as local commit `4c6aa48`. The repository was clean before qualification changes. PR #2, `feat: add logistics compatibility adapter`, remains open from `feat/logistics-compatibility-adapter` into `main`; readiness PR #3 is open from `manus/logix-readiness-recovery` into `main`.
 
 The repository is a Node.js monorepo with an Express API, React/Vite web client, deterministic analytics/data-quality/logistics packages, and an AI governance layer. The root scripts provide package build, API build, web build, migration, seed, test, and typecheck commands. The API exposes `/api/health`, `/api/readiness`, and `/api/version` as the minimum deployment probes described by the release brief.
 
@@ -63,13 +63,13 @@ No production secrets, signing keys, domain cutover, database migration, or exte
 | Backup restore | NOT VERIFIED | No backup/restore execution against a validation database was available |
 | Production runtime | NOT VERIFIED | No temporary-host deployment evidence was available |
 
-The qualification lane is green locally and remotely for the exact candidate `cdc18c23f2d1f3cc8dd6ed3531db23773beb7a67`. Under Node 22.13.0 and npm 10.9.2, the optional `better-sqlite3` module was rebuilt from source; local build, typecheck, and the full SQLite suite passed with 9 files and 98 tests. Production startup guards passed. Flutter 3.47.0 / Dart 3.13.0 passed dependency resolution, analysis, tests, debug APK, and release APK using safe test signing. Remote CI passed KAAF architecture, the repository CI workflow, Flutter qualification, and the disposable MySQL parity workflow. The MySQL lane executed clean install, build/typecheck, MySQL-compatible backend tests, controlled migrations, seed, production-mode startup, and health/readiness/version identity checks. This supports temporary-deployment readiness but does not constitute Hostinger runtime, persistence, backup/restore, UAT, security, or production-signing evidence.
+The qualification lane is green locally and remotely for the exact candidate `9b57f29318caba39cddc2e975996ce30145ba634`. Under Node 22.13.0 and npm 10.9.2, the optional `better-sqlite3` module was rebuilt from source; local build, typecheck, and the full SQLite suite passed with 9 files and 98 tests. Production startup guards passed. Flutter 3.47.0 / Dart 3.13.0 passed dependency resolution, analysis, tests, debug APK, and release APK using safe test signing. Remote CI passed KAAF architecture, the repository CI workflow including the dependency security audit, Flutter qualification, and the disposable MySQL parity workflow. The MySQL lane executed clean install, build/typecheck, MySQL-compatible backend tests, controlled migrations, seed, production-mode startup, and health/readiness/version identity checks. This supports temporary-deployment readiness but does not constitute Hostinger runtime, persistence, backup/restore, UAT, security, or production-signing evidence.
 
 ## Mandatory Release Gates
 
 | Gate | Required evidence | Current status |
 |---|---|---|
-| Exact release SHA | Candidate SHA recorded and reproducible | PASS: `cdc18c23f2d1f3cc8dd6ed3531db23773beb7a67` |
+| Exact release SHA | Candidate SHA recorded and reproducible | PASS: `9b57f29318caba39cddc2e975996ce30145ba634` |
 | Build and typecheck | Ordered package build, API/web build, and typecheck pass | PASS locally |
 | Tests | Actual test count on exact SHA, including API and logistics suites | PASS locally: 98 SQLite tests; remote MySQL-compatible suite passed with SQLite-only rollback rehearsal excluded |
 | Security | Verified tests for auth, RBAC, tenant isolation, uploads, rate limits, headers, CORS, errors, dependencies, and secrets | OPEN |
@@ -91,7 +91,7 @@ Only after every hard gate passes and the Founder explicitly approves the cutove
 
 ## Decision
 
-**READY FOR TEMPORARY HOSTINGER DEPLOYMENT.** The exact PR #3 candidate SHA `cdc18c23f2d1f3cc8dd6ed3531db23773beb7a67` passed local and remote build/typecheck, KAAF, repository CI, Flutter qualification, startup guards, and disposable MySQL parity. The branch is pushed and reviewable through PR #3. This is not production approval: Hostinger preflight, temporary runtime identity, persistence, backup/restore, Web UAT, Flutter runtime UAT, targeted security verification, and production signing/cutover remain open. Do not connect `logix.kynox.io` or modify production DNS.
+**READY FOR TEMPORARY HOSTINGER DEPLOYMENT.** The exact PR #3 candidate SHA `9b57f29318caba39cddc2e975996ce30145ba634` passed local and remote build/typecheck, KAAF, repository CI including the dependency security audit, Flutter qualification, startup guards, and disposable MySQL parity. The branch is pushed and reviewable through PR #3. This is not production approval: Hostinger preflight, temporary runtime identity, persistence, backup/restore, Web UAT, Flutter runtime UAT, targeted security verification, and production signing/cutover remain open. Do not connect `logix.kynox.io` or modify production DNS.
 
 ## Owner-Only Actions
 

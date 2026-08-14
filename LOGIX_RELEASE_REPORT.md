@@ -8,7 +8,7 @@
 
 # READY FOR TEMPORARY HOSTINGER DEPLOYMENT
 
-The exact candidate SHA `cdc18c23f2d1f3cc8dd6ed3531db23773beb7a67` is locally qualified and has passed the controlled remote checks attached to [PR #3](https://github.com/Islamce/kynox-logix/pull/3). The candidate passed repository CI, KAAF architecture verification, Flutter qualification, production startup guards, and the disposable MySQL parity lane. The MySQL lane executed clean install, build/typecheck, MySQL-compatible backend tests, controlled migrations, seed, production-mode startup, and runtime health/readiness/version identity checks.
+The exact candidate SHA `9b57f29318caba39cddc2e975996ce30145ba634` is locally qualified and has passed the controlled remote checks attached to [PR #3](https://github.com/Islamce/kynox-logix/pull/3). The candidate passed repository CI, KAAF architecture verification, Flutter qualification, production startup guards, and the disposable MySQL parity lane. The MySQL lane executed clean install, build/typecheck, MySQL-compatible backend tests, controlled migrations, seed, production-mode startup, and runtime health/readiness/version identity checks.
 
 This outcome authorizes **temporary non-production Hostinger deployment only**. It is not production approval. No Hostinger runtime, production domain, production DNS, production secret, production database, persistent-storage redeploy test, backup/restore rehearsal, Web UAT, Flutter runtime UAT, or production signing action has been completed in this phase. `logix.kynox.io` must remain disconnected.
 
@@ -20,7 +20,7 @@ This outcome authorizes **temporary non-production Hostinger deployment only**. 
 | Base branch | `main` |
 | Base SHA | `cd847997358a869fb0b51a43586d5b29b4b7463c` |
 | Candidate branch | `manus/logix-readiness-recovery` |
-| Candidate SHA | `cdc18c23f2d1f3cc8dd6ed3531db23773beb7a67` |
+| Candidate SHA | `9b57f29318caba39cddc2e975996ce30145ba634` |
 | Working tree | Clean after final local validation |
 | Remote state | Pushed to `origin/manus/logix-readiness-recovery` |
 | Readiness PR | [PR #3 — qualify LOGIX for temporary deployment](https://github.com/Islamce/kynox-logix/pull/3), open |
@@ -39,10 +39,10 @@ The branch contains PR #2’s logistics compatibility adapter plus scoped readin
 | Local backend suite | PASS | 9 files and 98 tests passed with SQLite after rebuilding optional `better-sqlite3` |
 | Production startup guards | PASS | MySQL/PostgreSQL acceptance and SQLite/unset/incomplete rejection tests passed |
 | Local repository hygiene | PASS | `git diff --check`; secret-pattern scan found no key material |
-| Remote repository CI | PASS | [CI run](https://github.com/Islamce/kynox-logix/actions/runs/31812385207) on candidate SHA |
-| Remote KAAF architecture | PASS | [KAAF run](https://github.com/Islamce/kynox-logix/actions/runs/31812385257) on candidate SHA |
-| Remote MySQL parity | PASS | [MySQL parity run](https://github.com/Islamce/kynox-logix/actions/runs/31812385245) on candidate SHA |
-| Remote Flutter qualification | PASS | [Flutter run](https://github.com/Islamce/kynox-logix/actions/runs/31812385228) on candidate SHA |
+| Remote repository CI | PASS | [CI run](https://github.com/Islamce/kynox-logix/actions/runs/31813768925) on candidate SHA |
+| Remote KAAF architecture | PASS | [KAAF run](https://github.com/Islamce/kynox-logix/actions/runs/31813769022) on candidate SHA |
+| Remote MySQL parity | PASS | [MySQL parity run](https://github.com/Islamce/kynox-logix/actions/runs/31813768970) on candidate SHA |
+| Remote Flutter qualification | PASS | [Flutter run](https://github.com/Islamce/kynox-logix/actions/runs/31813768977) on candidate SHA |
 | MySQL backend coverage | PASS | MySQL-compatible workspace suites passed; SQLite-only rollback rehearsal remains local-only by design |
 | MySQL migrations and seed | PASS | Remote parity workflow completed controlled migration and seed successfully |
 | Runtime identity | PASS in CI | `/api/health`, `/api/readiness`, and `/api/version` checked; `/api/version` matched the exact GitHub SHA and `ci-mysql` environment |
@@ -77,7 +77,7 @@ The Android wrapper is committed without local SDK paths or signing secrets. The
 | Node runtime | NOT VERIFIED | Confirm supported Node version in the Hostinger target panel |
 | MySQL | NOT VERIFIED | Create an isolated temporary LOGIX database and least-privilege credentials |
 | Temporary domain | NOT CREATED | Select a non-production temporary URL; do not use `logix.kynox.io` |
-| Deployed SHA | NOT DEPLOYED | Deploy exactly `cdc18c23f2d1f3cc8dd6ed3531db23773beb7a67`, not a moving branch reference |
+| Deployed SHA | NOT DEPLOYED | Deploy exactly `9b57f29318caba39cddc2e975996ce30145ba634`, not a moving branch reference |
 | Build command | READY FOR PREFLIGHT | Confirm Hostinger build configuration matches repository scripts |
 | Start command | READY FOR PREFLIGHT | Confirm the Node entrypoint and process behavior |
 | Environment | READY FOR PREFLIGHT | Set production-mode temporary values, strong temporary JWT secret, temporary CORS origin, and AI disabled |
@@ -129,7 +129,7 @@ The Android wrapper is committed without local SDK paths or signing secrets. The
 | SEC-02 | Flutter critical journeys and permission behavior are not runtime-qualified on an emulator/device | High | Open |
 | SEC-03 | Production Android signing is intentionally not configured | High for distribution; not a temporary-backend blocker | Owner action |
 | SEC-04 | Older Analytics-era deployment documents require migration or explicit supersession before operational use | Medium | Open |
-| SEC-05 | No production secrets found in the candidate tree | Informational | Closed for this scan |
+| SEC-05 | No production secrets found in the candidate tree; CI dependency audit passed after nanoid remediation | Informational | Closed for this scan |
 
 No exploitable vulnerability is being asserted without a corresponding evidence-based test. Security items above are qualification gaps and owner/runtime actions.
 
@@ -155,7 +155,7 @@ Provide authorized access to the Hostinger target and an isolated temporary LOGI
 ## References
 
 [1]: https://github.com/Islamce/kynox-logix/pull/3 "LOGIX readiness pull request"
-[2]: https://github.com/Islamce/kynox-logix/actions/runs/31812385245 "LOGIX MySQL parity workflow"
-[3]: https://github.com/Islamce/kynox-logix/actions/runs/31812385228 "LOGIX Flutter qualification workflow"
-[4]: https://github.com/Islamce/kynox-logix/actions/runs/31812385207 "LOGIX repository CI workflow"
-[5]: https://github.com/Islamce/kynox-logix/actions/runs/31812385257 "LOGIX KAAF architecture workflow"
+[2]: https://github.com/Islamce/kynox-logix/actions/runs/31813768970 "LOGIX MySQL parity workflow"
+[3]: https://github.com/Islamce/kynox-logix/actions/runs/31813768977 "LOGIX Flutter qualification workflow"
+[4]: https://github.com/Islamce/kynox-logix/actions/runs/31813768925 "LOGIX repository CI workflow"
+[5]: https://github.com/Islamce/kynox-logix/actions/runs/31813769022 "LOGIX KAAF architecture workflow"
