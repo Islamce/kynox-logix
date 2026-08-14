@@ -1,6 +1,6 @@
 # KYNOX LOGIX — Deployment Readiness and Production Qualification
 
-**Status:** `NO-GO` pending completion of external hosting, production-parity database runtime, storage, backup/restore, UAT, and signed Flutter release gates.
+**Status:** `READY FOR TEMPORARY HOSTINGER DEPLOYMENT`; production cutover remains `NO-GO` until runtime, persistence, backup/restore, UAT, security, and owner-approval gates pass.
 
 **Scope:** This document supersedes stale Analytics/Inventory deployment instructions for the LOGIX product. It is an evidence record, not an approval to attach the production domain or publish a mobile release.
 
@@ -18,7 +18,7 @@
 
 ## Repository Evidence
 
-The audit was performed against the local clone on 14 August 2026. The checked-out base was `main` at `cd847997358a869fb0b51a43586d5b29b4b7463c`; the working qualification branch is `manus/logix-readiness-recovery` and includes the open PR #2 adapter commit as local commit `4c6aa48`; the current release-candidate commit is `dcf568c465a2f2aacf02ecfd4ddb68c1df36abfd`. The repository was clean before qualification changes. The only open pull request observed was PR #2, `feat: add logistics compatibility adapter`, from `feat/logistics-compatibility-adapter` into `main`.
+The audit was performed against the local clone on 14 August 2026. The checked-out base was `main` at `cd847997358a869fb0b51a43586d5b29b4b7463c`; the controlled qualification branch is `manus/logix-readiness-recovery`; the exact remote-qualified candidate is `cdc18c23f2d1f3cc8dd6ed3531db23773beb7a67`; and the controlled pull request is PR #3. The branch includes the open PR #2 adapter commit as local commit `4c6aa48`. The repository was clean before qualification changes. PR #2, `feat: add logistics compatibility adapter`, remains open from `feat/logistics-compatibility-adapter` into `main`; readiness PR #3 is open from `manus/logix-readiness-recovery` into `main`.
 
 The repository is a Node.js monorepo with an Express API, React/Vite web client, deterministic analytics/data-quality/logistics packages, and an AI governance layer. The root scripts provide package build, API build, web build, migration, seed, test, and typecheck commands. The API exposes `/api/health`, `/api/readiness`, and `/api/version` as the minimum deployment probes described by the release brief.
 
@@ -43,8 +43,8 @@ No production secrets, signing keys, domain cutover, database migration, or exte
 |---|---|---|
 | Repository clone | PASS | `gh repo clone Islamce/kynox-logix` completed |
 | Base branch and SHA capture | PASS | `main`, `cd847997358a869fb0b51a43586d5b29b4b7463c` |
-| Open PR inventory | PASS | One open PR, #2 |
-| Working branch | PASS | `manus/logix-readiness` |
+| Open PR inventory | PASS | PR #2 remains open; readiness PR #3 is open |
+| Working branch | PASS | `manus/logix-readiness-recovery` |
 | Dependency installation | PASS | `npm ci --ignore-scripts` completed |
 | Typecheck | PASS | Ordered `npm run typecheck` passed across all workspaces |
 | Full build | PASS | Ordered `npm run build` passed; web bundle built successfully |
@@ -58,29 +58,29 @@ No production secrets, signing keys, domain cutover, database migration, or exte
 | Android debug APK | PASS | `build/app/outputs/flutter-apk/app-debug.apk` produced |
 | Android release APK | PASS / SIGNING PENDING | `flutter build apk --release` produced `app-release.apk` using safe test signing; no production key was used |
 | Flutter SDK | PASS | Flutter 3.47.0 stable with Dart 3.13.0 installed from the official stable channel |
-| Hostinger capability | NOT VERIFIED | No Hostinger panel/session evidence or deployment credentials were available |
+| Hostinger capability | NOT VERIFIED | No Hostinger panel/session evidence or deployment credentials were available; this is the next owner-access preflight |
 | Production database | NOT VERIFIED | No isolated Hostinger MySQL instance or connection evidence was available |
 | Backup restore | NOT VERIFIED | No backup/restore execution against a validation database was available |
 | Production runtime | NOT VERIFIED | No temporary-host deployment evidence was available |
 
-The recovered qualification lane is green for local code evidence. Under Node 22.13.0 and npm 10.9.2, the optional `better-sqlite3` module was rebuilt from source after installing the local compiler toolchain. The ordered package build, typecheck, full build, and full test suite passed; the final test result was 9 files and 98 tests passed. Added production startup-guard tests verify MySQL and PostgreSQL acceptance, SQLite rejection, unset `DB_CLIENT` rejection, and missing credential rejection. Flutter 3.47.0 / Dart 3.13.0 passed `pub get`, `analyze`, and unit tests. Android tooling was installed, and both debug and release APKs were produced using safe test signing. The release build uses portable Gradle settings; no production signing key is present. Added GitHub Actions workflows define the required disposable MySQL parity lane and Flutter lane, but remote execution is still pending PR creation. These local results do not replace live Hostinger, MySQL, persistence, backup/restore, or UAT evidence.
+The qualification lane is green locally and remotely for the exact candidate `cdc18c23f2d1f3cc8dd6ed3531db23773beb7a67`. Under Node 22.13.0 and npm 10.9.2, the optional `better-sqlite3` module was rebuilt from source; local build, typecheck, and the full SQLite suite passed with 9 files and 98 tests. Production startup guards passed. Flutter 3.47.0 / Dart 3.13.0 passed dependency resolution, analysis, tests, debug APK, and release APK using safe test signing. Remote CI passed KAAF architecture, the repository CI workflow, Flutter qualification, and the disposable MySQL parity workflow. The MySQL lane executed clean install, build/typecheck, MySQL-compatible backend tests, controlled migrations, seed, production-mode startup, and health/readiness/version identity checks. This supports temporary-deployment readiness but does not constitute Hostinger runtime, persistence, backup/restore, UAT, security, or production-signing evidence.
 
 ## Mandatory Release Gates
 
 | Gate | Required evidence | Current status |
 |---|---|---|
-| Exact release SHA | Candidate SHA recorded and reproducible | PASS: `dcf568c465a2f2aacf02ecfd4ddb68c1df36abfd` |
+| Exact release SHA | Candidate SHA recorded and reproducible | PASS: `cdc18c23f2d1f3cc8dd6ed3531db23773beb7a67` |
 | Build and typecheck | Ordered package build, API/web build, and typecheck pass | PASS locally |
-| Tests | Actual test count on exact SHA, including API and logistics suites | PASS locally: 98 tests |
+| Tests | Actual test count on exact SHA, including API and logistics suites | PASS locally: 98 SQLite tests; remote MySQL-compatible suite passed with SQLite-only rollback rehearsal excluded |
 | Security | Verified tests for auth, RBAC, tenant isolation, uploads, rate limits, headers, CORS, errors, dependencies, and secrets | OPEN |
 | Isolated database | Hostinger-supported MySQL database and least-privilege credentials | OPEN |
 | Controlled migrations | Backup, target verification, migration status, migration, and seed evidence | OPEN |
 | Persistent storage | Upload/import/redeploy/recovery test proves files and lineage survive | OPEN |
 | Temporary deployment | Temporary Hostinger URL with health, readiness, version, runtime, and logs evidence | OPEN |
 | UAT | Web critical journeys pass | OPEN |
-| Flutter client | Flutter analyze, tests, debug/release build, and critical journeys pass | PARTIAL: analyze/tests/debug/release APK pass; critical journeys open |
+| Flutter client | Flutter analyze, tests, debug/release build, and critical journeys pass | PARTIAL: local and remote analyze/tests/debug/release APK pass; critical journeys open |
 | Backup/restore | SQL backup restored to a separate validation database and checked | OPEN |
-| Remote CI | Exact-PR MySQL parity and Flutter workflows | PENDING PR execution |
+| Remote CI | Exact-PR MySQL parity and Flutter workflows | PASS on PR #3 candidate SHA; KAAF and repository CI also pass |
 | Production cutover | Founder-approved domain attach and SSL verification | OWNER ACTION REQUIRED |
 
 ## Deployment Procedure After Local Gates Pass
@@ -91,7 +91,7 @@ Only after every hard gate passes and the Founder explicitly approves the cutove
 
 ## Decision
 
-**NO-GO.** Local code qualification has materially recovered: typecheck, full build, 98 backend tests, production startup guards, Flutter analyze/tests, and both debug/release APK builds pass. The release remains blocked by remote disposable-MySQL workflow execution, Hostinger capability/deployment evidence, persistent storage validation, backup/restore, end-to-end UAT, Flutter critical journeys, and production signing ownership. No production deployment or domain cutover should occur until those gates are independently recorded.
+**READY FOR TEMPORARY HOSTINGER DEPLOYMENT.** The exact PR #3 candidate SHA `cdc18c23f2d1f3cc8dd6ed3531db23773beb7a67` passed local and remote build/typecheck, KAAF, repository CI, Flutter qualification, startup guards, and disposable MySQL parity. The branch is pushed and reviewable through PR #3. This is not production approval: Hostinger preflight, temporary runtime identity, persistence, backup/restore, Web UAT, Flutter runtime UAT, targeted security verification, and production signing/cutover remain open. Do not connect `logix.kynox.io` or modify production DNS.
 
 ## Owner-Only Actions
 
