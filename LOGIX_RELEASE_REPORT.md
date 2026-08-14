@@ -20,8 +20,8 @@ The product is still **not production-qualified** because Hostinger capability, 
 | Base branch | `main` |
 | Base SHA | `cd847997358a869fb0b51a43586d5b29b4b7463c` |
 | Qualification branch | `manus/logix-readiness-recovery` |
-| Current candidate SHA | To be recorded after the scoped recovery changes are committed |
-| Working tree | Scoped changes pending final commit |
+| Current candidate SHA | `dcf568c465a2f2aacf02ecfd4ddb68c1df36abfd` |
+| Working tree | Clean after local commit |
 | Open PRs | PR #2 only: `feat: add logistics compatibility adapter` |
 | Deployment candidate | Local only; not pushed or deployed |
 
@@ -148,4 +148,4 @@ No vulnerability is being claimed without a verified test. The open findings are
 
 ## Local Change Record
 
-The scoped changes are pending final local commit on `manus/logix-readiness-recovery`. The branch is not pushed, PR #2 is not merged, no Hostinger action was taken, and no production or signing secret was created.
+The scoped changes are recorded locally at commit `dcf568c465a2f2aacf02ecfd4ddb68c1df36abfd` on `manus/logix-readiness-recovery`. The branch is not pushed, PR #2 is not merged, no Hostinger action was taken, and no production or signing secret was created.

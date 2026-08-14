@@ -18,7 +18,7 @@
 
 ## Repository Evidence
 
-The audit was performed against the local clone on 14 August 2026. The checked-out base was `main` at `cd847997358a869fb0b51a43586d5b29b4b7463c`; the working qualification branch is `manus/logix-readiness-recovery` and includes the open PR #2 adapter commit as local commit `4c6aa48`; the current release-candidate commit will be recorded after the scoped recovery changes are committed. The repository was clean before qualification changes. The only open pull request observed was PR #2, `feat: add logistics compatibility adapter`, from `feat/logistics-compatibility-adapter` into `main`.
+The audit was performed against the local clone on 14 August 2026. The checked-out base was `main` at `cd847997358a869fb0b51a43586d5b29b4b7463c`; the working qualification branch is `manus/logix-readiness-recovery` and includes the open PR #2 adapter commit as local commit `4c6aa48`; the current release-candidate commit is `dcf568c465a2f2aacf02ecfd4ddb68c1df36abfd`. The repository was clean before qualification changes. The only open pull request observed was PR #2, `feat: add logistics compatibility adapter`, from `feat/logistics-compatibility-adapter` into `main`.
 
 The repository is a Node.js monorepo with an Express API, React/Vite web client, deterministic analytics/data-quality/logistics packages, and an AI governance layer. The root scripts provide package build, API build, web build, migration, seed, test, and typecheck commands. The API exposes `/api/health`, `/api/readiness`, and `/api/version` as the minimum deployment probes described by the release brief.
 
@@ -69,7 +69,7 @@ The recovered qualification lane is now green for local code evidence. Under Nod
 
 | Gate | Required evidence | Current status |
 |---|---|---|
-| Exact release SHA | Candidate SHA recorded and reproducible | OPEN until final commit |
+| Exact release SHA | Candidate SHA recorded and reproducible | PASS: `dcf568c465a2f2aacf02ecfd4ddb68c1df36abfd` |
 | Build and typecheck | Ordered package build, API/web build, and typecheck pass | PASS locally |
 | Tests | Actual test count on exact SHA, including API and logistics suites | PASS locally: 98 tests |
 | Security | Verified tests for auth, RBAC, tenant isolation, uploads, rate limits, headers, CORS, errors, dependencies, and secrets | OPEN |
