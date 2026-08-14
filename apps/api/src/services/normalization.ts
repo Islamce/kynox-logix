@@ -339,7 +339,9 @@ export function buildNormalization(opts: NormalizeOptions): NormalizationResult 
   }));
 
   const summary = emptySummary();
-  const nowIso = new Date().toISOString();
+  // MySQL DATETIME rejects ISO-8601 `T`/`Z` values, while SQLite accepts them.
+  // Store one portable UTC wall-clock representation for both production and tests.
+  const nowSqlDateTime = new Date().toISOString().slice(0, 19).replace('T', ' ');
   const canonicalRows: Record<string, unknown>[] = [];
 
   rows.forEach((r, i) => {
@@ -410,7 +412,7 @@ export function buildNormalization(opts: NormalizeOptions): NormalizationResult 
       reversal_of_transaction_id: null,
       normalization_warnings: JSON.stringify(c.warnings),
       original_source_record: JSON.stringify(r),
-      created_at: nowIso,
+      created_at: nowSqlDateTime,
     });
 
     // --- summary accumulation ---
