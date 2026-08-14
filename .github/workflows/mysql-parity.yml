@@ -64,8 +64,11 @@ jobs:
 
       - name: Run backend suite against MySQL
         run: |
-          npm test -- --exclude src/tenantMigration.test.ts --exclude src/tenantIsolation.test.ts
-          npm test -w @kynox/api -- src/tenantIsolation.test.ts
+          npm run test -w @kynox/ai-engine
+          npm run test -w @kynox/analytics-engine
+          npm run test -w @kynox/data-quality
+          npm run test -w @kynox/logistics-engine
+          npm run test -w @kynox/api -- --exclude src/tenantMigration.test.ts
 
       - name: Run controlled migrations and seed
         env:
