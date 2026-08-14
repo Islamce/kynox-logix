@@ -84,7 +84,7 @@ export function validateProductionConfig(): string[] {
     problems.push(`Unsupported DB_CLIENT '${client}'.`);
   }
   if (!process.env.CORS_ORIGIN) {
-    problems.push('CORS_ORIGIN is not set; set it to https://analytics.kynox.io');
+    problems.push('CORS_ORIGIN is not set; set it to https://logix.kynox.io');
   }
   return problems;
 }
