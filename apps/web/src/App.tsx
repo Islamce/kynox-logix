@@ -13,6 +13,7 @@ import { AbcXyzPage } from './pages/AbcXyz';
 import { ConsumptionPage } from './pages/Consumption';
 import { Material360Page } from './pages/Material360';
 import { PlanningPage } from './pages/Planning';
+import { ScenarioSimulationPage } from './pages/ScenarioSimulation';
 import { AiCenterPage } from './pages/AiCenter';
 import { ReportsPage } from './pages/Reports';
 import { AdminPage } from './pages/Admin';
@@ -64,6 +65,7 @@ export function App() {
           <Route path="/consumption" element={<ConsumptionPage />} />
           <Route path="/materials" element={<Material360Page />} />
           <Route path="/planning" element={<PlanningPage />} />
+          <Route path="/scenarios" element={<ScenarioSimulationPage />} />
           <Route path="/ai" element={<AiCenterPage />} />
           <Route path="/reports" element={<ReportsPage />} />
           <Route path="/admin" element={<AdminPage />} />

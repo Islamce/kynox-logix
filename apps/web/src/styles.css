@@ -24,3 +24,16 @@ html, body, #root {
 }
 .kx-animate-rise { animation: kx-rise var(--kx-duration-base) var(--kx-ease-out) both; }
 .kx-animate-fade { animation: kx-fade var(--kx-duration-base) var(--kx-ease-standard) both; }
+
+/* RTL support (Arabic locale). Scope: app chrome only — sidebar active-item
+   accent rail and menu text alignment. Data-dense views (tables, charts,
+   numeric KPIs) intentionally stay left-to-right in both locales, which is
+   standard practice for analytical UIs in RTL languages, so numeric columns,
+   formulas and chart axes remain unambiguous. */
+html[dir='rtl'] .kx-sidebar-accent-rail {
+  left: auto;
+  right: 0;
+}
+html[dir='rtl'] .kx-menu-panel {
+  text-align: right;
+}

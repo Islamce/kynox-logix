@@ -18,6 +18,7 @@ export const NAV: NavItem[] = [
   { to: '/consumption', label: 'Consumption Analytics', icon: 'consumption', section: 'Analysis' },
   { to: '/materials', label: 'Material 360', icon: 'materials', section: 'Analysis' },
   { to: '/planning', label: 'Planning & Forecasting', icon: 'planning', section: 'Analysis' },
+  { to: '/scenarios', label: 'Scenario Simulation', icon: 'planning', section: 'Analysis' },
   { to: '/ai', label: 'AI Insights Center', icon: 'ai', section: 'Analysis' },
   { to: '/reports', label: 'Reports & Exports', icon: 'reports', section: 'Governance' },
   { to: '/admin', label: 'Administration', icon: 'admin', section: 'Governance' },
