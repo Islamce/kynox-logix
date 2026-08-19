@@ -3,6 +3,7 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { apiGet, clearSession, getUser, getWorkspace, setWorkspace, type Workspace } from '../lib/api';
 import { Icon, type IconName } from '../design/icons';
 import { useTheme, type ThemeMode } from '../design/theme';
+import { useLocale, t, type Locale } from '../design/locale';
 import { NAV } from './nav';
 import { CommandPalette, type Command } from './CommandPalette';
 import { InsightCallout } from './intelligence';
@@ -26,6 +27,7 @@ export function Layout() {
   const navigate = useNavigate();
   const user = getUser();
   const { mode, resolved, setThemeMode, cycle } = useTheme();
+  const { locale, setAppLocale } = useLocale();
   const [datasets, setDatasets] = useState<DatasetOption[]>([]);
   const [ws, setWs] = useState<Workspace>(getWorkspace());
   const [navOpen, setNavOpen] = useState(false);
@@ -77,6 +79,8 @@ export function Layout() {
       { id: 'theme:light', label: 'Theme: Light', group: 'Preferences', icon: 'sun', run: () => setThemeMode('light') },
       { id: 'theme:dark', label: 'Theme: Dark', group: 'Preferences', icon: 'moon', run: () => setThemeMode('dark') },
       { id: 'theme:system', label: 'Theme: System', group: 'Preferences', icon: 'system', run: () => setThemeMode('system') },
+      { id: 'locale:en', label: 'Language: English', group: 'Preferences', icon: 'system', run: () => setAppLocale('en') },
+      { id: 'locale:ar', label: 'Language: العربية (Arabic)', group: 'Preferences', icon: 'system', run: () => setAppLocale('ar') },
       { id: 'action:signout', label: 'Sign out', group: 'Account', icon: 'logout', run: signOut },
     ];
     return [...nav, ...actions];
@@ -116,7 +120,7 @@ export function Layout() {
             return (
               <div key={section} className="mb-2">
                 <p className="px-5 pt-2 pb-1 text-[10.5px] font-semibold uppercase tracking-wider" style={{ color: 'var(--kx-sidebar-fg-dim)' }}>
-                  {section}
+                  {section === 'Overview' ? t(locale, 'nav.overview') : section === 'Analysis' ? t(locale, 'nav.analysis') : t(locale, 'nav.governance')}
                 </p>
                 {items.map((item) => (
                   <SidebarLink key={item.to} to={item.to} label={item.label} icon={item.icon} onNavigate={() => setNavOpen(false)} />
@@ -127,7 +131,7 @@ export function Layout() {
         </nav>
 
         <div className="px-4 py-3" style={{ borderTop: '1px solid var(--kx-sidebar-line)' }}>
-          <UserMenu name={user?.name} role={user?.role} mode={mode} onMode={setThemeMode} onSignOut={signOut} placement="up" />
+          <UserMenu name={user?.name} role={user?.role} mode={mode} onMode={setThemeMode} locale={locale} onLocale={setAppLocale} onSignOut={signOut} placement="up" />
         </div>
       </aside>
 
@@ -150,7 +154,7 @@ export function Layout() {
             aria-label="Open command palette"
           >
             <Icon name="search" size={16} />
-            <span className="hidden sm:inline">Search…</span>
+            <span className="hidden sm:inline">{t(locale, 'search.placeholder')}</span>
             <kbd className="hidden md:inline ml-2 text-[11px] border border-line rounded px-1 py-0.5 group-hover:border-line-strong">⌘K</kbd>
           </button>
 
@@ -231,7 +235,7 @@ function SidebarLink({ to, label, icon, onNavigate }: { to: string; label: strin
       {({ isActive }) => (
         <>
           {isActive && (
-            <span className="absolute left-0 top-1.5 bottom-1.5 w-0.5 rounded-full" style={{ backgroundColor: 'var(--kx-sidebar-accent)' }} aria-hidden />
+            <span className="kx-sidebar-accent-rail absolute left-0 top-1.5 bottom-1.5 w-0.5 rounded-full" style={{ backgroundColor: 'var(--kx-sidebar-accent)' }} aria-hidden />
           )}
           <Icon name={icon} className={isActive ? 'text-[var(--kx-sidebar-accent)]' : ''} />
           <span>{label}</span>
@@ -267,10 +271,11 @@ function DatasetSelect({
 }
 
 function UserMenu({
-  name, role, mode, onMode, onSignOut, placement,
+  name, role, mode, onMode, locale, onLocale, onSignOut, placement,
 }: {
   name?: string; role?: string;
   mode: ThemeMode; onMode: (m: ThemeMode) => void;
+  locale: Locale; onLocale: (l: Locale) => void;
   onSignOut: () => void;
   placement: 'up' | 'down';
 }) {
@@ -304,7 +309,7 @@ function UserMenu({
       {open && (
         <div
           role="menu"
-          className={`absolute ${placement === 'up' ? 'bottom-full mb-2' : 'top-full mt-2'} left-0 right-0 rounded-lg border border-line bg-elevated text-body shadow-[var(--kx-shadow-lg)] p-1.5 kx-animate-rise`}
+          className={`kx-menu-panel absolute ${placement === 'up' ? 'bottom-full mb-2' : 'top-full mt-2'} left-0 right-0 rounded-lg border border-line bg-elevated text-body shadow-[var(--kx-shadow-lg)] p-1.5 kx-animate-rise`}
         >
           <p className="px-2 pt-1 pb-1.5 text-[10.5px] font-semibold uppercase tracking-wide text-subtle">Theme</p>
           <div className="grid grid-cols-3 gap-1 px-1 pb-1.5">
@@ -319,6 +324,22 @@ function UserMenu({
               >
                 <Icon name={m === 'light' ? 'sun' : m === 'dark' ? 'moon' : 'system'} size={16} />
                 {m}
+              </button>
+            ))}
+          </div>
+          <div className="h-px bg-line my-1" />
+          <p className="px-2 pt-1 pb-1.5 text-[10.5px] font-semibold uppercase tracking-wide text-subtle">{t(locale, 'menu.language')}</p>
+          <div className="grid grid-cols-2 gap-1 px-1 pb-1.5">
+            {([{ id: 'en', label: 'English' }, { id: 'ar', label: 'العربية' }] as { id: Locale; label: string }[]).map((l) => (
+              <button
+                key={l.id}
+                type="button"
+                onClick={() => onLocale(l.id)}
+                className={`py-1.5 rounded-md text-[11px] border ${
+                  locale === l.id ? 'border-brand text-link bg-brand-soft' : 'border-line text-muted hover:bg-sunken'
+                }`}
+              >
+                {l.label}
               </button>
             ))}
           </div>
