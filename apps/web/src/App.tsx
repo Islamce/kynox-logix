@@ -5,6 +5,7 @@ import { Spinner } from './components/ui';
 import { Layout } from './components/Layout';
 import { LoginPage } from './pages/Login';
 import { DashboardPage } from './pages/Dashboard';
+import { ControlTowerPage } from './pages/ControlTower';
 import { WorkspacePage } from './pages/Workspace';
 import { QualityPage } from './pages/Quality';
 import { InventoryPage } from './pages/Inventory';
@@ -57,6 +58,7 @@ export function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route element={<RequireAuth><Layout /></RequireAuth>}>
           <Route path="/" element={<DashboardPage />} />
+          <Route path="/control-tower" element={<ControlTowerPage />} />
           <Route path="/workspace" element={<WorkspacePage />} />
           <Route path="/quality" element={<QualityPage />} />
           <Route path="/inventory" element={<InventoryPage />} />
