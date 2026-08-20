@@ -15,28 +15,139 @@
   "confidenceReason": "Declared and corroborated by 4 discovered code file(s).",
   "declared": true,
   "declaredConfidence": "verified",
-  "dependedOnBy": ["analytics-ai-engine", "analytics-api", "analytics-data-quality", "analytics-engine", "analytics-logistics-engine"],
+  "dependedOnBy": [
+    "analytics-ai-engine",
+    "analytics-api",
+    "analytics-data-quality",
+    "analytics-engine",
+    "analytics-logistics-engine"
+  ],
   "dependsOn": [],
   "discovery": {
-    "codeFiles": ["packages/shared-types/src/canonical.ts", "packages/shared-types/src/index.ts", "packages/shared-types/src/logistics.test.ts", "packages/shared-types/src/logistics.ts"],
+    "codeFiles": [
+      "packages/shared-types/src/canonical.ts",
+      "packages/shared-types/src/index.ts",
+      "packages/shared-types/src/logistics.test.ts",
+      "packages/shared-types/src/logistics.ts"
+    ],
     "discovered": true,
     "entryPoints": [],
-    "languages": ["json", "typescript"],
+    "languages": [
+      "json",
+      "typescript"
+    ],
     "parseErrors": [],
-    "publicSymbols": ["ALL_ROLES", "AbcClass", "AbcResult", "AgingBucket", "AgingResult", "AiChatResponse", "AiEvidence", "AiInsight", "AvailabilitySnapshot", "CanonicalField", "CarrierRef", "CleansingAction", "ColumnMapping", "DatasetSummary", "DecisionEvidenceRef", "DecisionObject", "ExcessResult", "ForecastAccuracy", "ForecastComparison", "ForecastResult", "FreightCharge", "HealthWeights", "IssueSeverity", "KpiValue", "LogisticsDate", "LogisticsId", "LogisticsMilestone", "LogisticsTimestamp", "MaterialMasterRow", "MaterialRequirementRef", "MovementCategory", "MovementRow", "Permission", "PhysicalInventoryRow", "QualityIssue", "QualityScores", "R4CRequirementRef", "ROLE_PERMISSIONS", "ReportDetectionResult", "ReportType", "ReservationRef", "Role", "Shipment", "ShipmentLeg", "ShipmentMaterial", "ShortageResult", "SourceReference", "StockRow", "WarehouseMovementEvidence", "WarehouseRef", "XyzClass", "XyzResult"],
-    "sourceFiles": ["packages/shared-types/kaaf.module.json", "packages/shared-types/package.json", "packages/shared-types/src/canonical.ts", "packages/shared-types/src/index.ts", "packages/shared-types/src/logistics.test.ts", "packages/shared-types/src/logistics.ts", "packages/shared-types/tsconfig.json"]
+    "publicSymbols": [
+      "ALL_ROLES",
+      "AbcClass",
+      "AbcResult",
+      "AgingBucket",
+      "AgingResult",
+      "AiChatResponse",
+      "AiEvidence",
+      "AiInsight",
+      "AvailabilitySnapshot",
+      "CanonicalField",
+      "CarrierRef",
+      "CleansingAction",
+      "ColumnMapping",
+      "DatasetSummary",
+      "DecisionEvidenceRef",
+      "DecisionObject",
+      "ExcessResult",
+      "ForecastAccuracy",
+      "ForecastComparison",
+      "ForecastResult",
+      "FreightCharge",
+      "HealthWeights",
+      "IssueSeverity",
+      "KpiValue",
+      "LogisticsDate",
+      "LogisticsId",
+      "LogisticsMilestone",
+      "LogisticsTimestamp",
+      "MaterialMasterRow",
+      "MaterialRequirementRef",
+      "MovementCategory",
+      "MovementRow",
+      "Permission",
+      "PhysicalInventoryRow",
+      "QualityIssue",
+      "QualityScores",
+      "R4CRequirementRef",
+      "ROLE_PERMISSIONS",
+      "ReportDetectionResult",
+      "ReportType",
+      "ReservationRef",
+      "Role",
+      "Shipment",
+      "ShipmentLeg",
+      "ShipmentMaterial",
+      "ShortageResult",
+      "SourceReference",
+      "StockRow",
+      "WarehouseMovementEvidence",
+      "WarehouseRef",
+      "XyzClass",
+      "XyzResult"
+    ],
+    "sourceFiles": [
+      "packages/shared-types/kaaf.module.json",
+      "packages/shared-types/package.json",
+      "packages/shared-types/src/canonical.ts",
+      "packages/shared-types/src/index.ts",
+      "packages/shared-types/src/logistics.test.ts",
+      "packages/shared-types/src/logistics.ts",
+      "packages/shared-types/tsconfig.json"
+    ]
   },
   "driftFindings": [
-    {"evidence": ["ALL_ROLES", "AbcClass", "AbcResult", "AgingBucket", "AgingResult", "AiChatResponse", "AiEvidence", "AiInsight", "AvailabilitySnapshot", "CanonicalField"], "module": "analytics-shared-types", "recommendation": "Consider whether this module is really two (docs/kaaf/STANDARDS.md §1).", "severity": "info", "summary": "52 public symbols at the entry points (guideline is 10).", "type": "large-public-surface"}
+    {
+      "evidence": [
+        "ALL_ROLES",
+        "AbcClass",
+        "AbcResult",
+        "AgingBucket",
+        "AgingResult",
+        "AiChatResponse",
+        "AiEvidence",
+        "AiInsight",
+        "AvailabilitySnapshot",
+        "CanonicalField"
+      ],
+      "module": "analytics-shared-types",
+      "recommendation": "Consider whether this module is really two (docs/kaaf/STANDARDS.md §1).",
+      "severity": "info",
+      "summary": "52 public symbols at the entry points (guideline is 10).",
+      "type": "large-public-surface"
+    }
   ],
   "externalIntegrations": [],
   "id": "analytics-shared-types",
-  "ownedEntities": ["canonical-transaction-category", "logistics-contract", "logistics-decision-object", "permission", "r4c-requirement-reference", "role", "role-permission-matrix", "shared-api-dto", "warehouse-read-model"],
+  "ownedEntities": [
+    "canonical-transaction-category",
+    "logistics-contract",
+    "logistics-decision-object",
+    "permission",
+    "r4c-requirement-reference",
+    "role",
+    "role-permission-matrix",
+    "shared-api-dto",
+    "warehouse-read-model"
+  ],
   "owner": "Backend",
   "path": "packages/shared-types",
   "permissions": [],
-  "publicEntryPoints": ["packages/shared-types/package.json", "packages/shared-types/src/index.ts", "packages/shared-types/src/logistics.ts"],
+  "publicEntryPoints": [
+    "packages/shared-types/package.json",
+    "packages/shared-types/src/index.ts",
+    "packages/shared-types/src/logistics.ts"
+  ],
   "purpose": "Define the types, canonical transaction vocabulary, and the single role-to-permission matrix that every other module in the platform shares.",
-  "readNext": ["packages/shared-types/package.json", "packages/shared-types/src/index.ts", "packages/shared-types/src/logistics.ts"],
+  "readNext": [
+    "packages/shared-types/package.json",
+    "packages/shared-types/src/index.ts",
+    "packages/shared-types/src/logistics.ts"
+  ],
   "sourceManifest": "packages/shared-types/kaaf.module.json"
 }
