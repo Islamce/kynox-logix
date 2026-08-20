@@ -6,7 +6,7 @@
     "doNotEdit": true,
     "generator": "kaaf",
     "generatorVersion": "0.7.0",
-    "inputDigest": "0c394c5d49ec9b7e9deb4ab45c75907afc3ae5da7a89709ea7101e8fbf79ba9d",
+    "inputDigest": "326901362992d5349e425f893089fc9683a71d19a20a47eab433a262f64778e9",
     "provenanceNote": "Generated from the declared kaaf.repo.json and kaaf.module.json manifests. No wall-clock time or commit SHA is embedded: both would break byte-identical regeneration. Use git history for when and from which commit.",
     "schemaVersion": "1.0.0"
   },
@@ -18,39 +18,23 @@
   "dependedOnBy": [],
   "dependsOn": [],
   "discovery": {
-    "codeFiles": [
-      "scripts/generate-uat-data.js"
-    ],
+    "codeFiles": ["scripts/generate-uat-data.js"],
     "discovered": true,
-    "entryPoints": [
-      "scripts/generate-uat-data.js"
-    ],
-    "languages": [
-      "javascript",
-      "json"
-    ],
+    "entryPoints": ["scripts/generate-uat-data.js"],
+    "languages": ["javascript", "json"],
     "parseErrors": [],
     "publicSymbols": [],
-    "sourceFiles": [
-      "scripts/generate-uat-data.js",
-      "scripts/kaaf.module.json"
-    ]
+    "sourceFiles": ["scripts/generate-uat-data.js", "scripts/kaaf.module.json"]
   },
   "driftFindings": [],
   "externalIntegrations": [],
   "id": "analytics-fixtures",
-  "ownedEntities": [
-    "uat-dataset-fixture"
-  ],
+  "ownedEntities": ["uat-dataset-fixture"],
   "owner": "Data",
   "path": "scripts",
   "permissions": [],
-  "publicEntryPoints": [
-    "scripts/generate-uat-data.js"
-  ],
+  "publicEntryPoints": ["scripts/generate-uat-data.js"],
   "purpose": "Generate synthetic UAT and demonstration datasets so the platform can be exercised without customer data.",
-  "readNext": [
-    "scripts/generate-uat-data.js"
-  ],
+  "readNext": ["scripts/generate-uat-data.js"],
   "sourceManifest": "scripts/kaaf.module.json"
 }
