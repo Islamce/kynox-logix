@@ -10,6 +10,7 @@ export interface NavItem {
 
 export const NAV: NavItem[] = [
   { to: '/', label: 'Executive Dashboard', icon: 'dashboard', section: 'Overview' },
+  { to: '/control-tower', label: 'Control Tower', icon: 'dashboard', section: 'Overview' },
   { to: '/workspace', label: 'Data Workspace', icon: 'workspace', section: 'Overview' },
   { to: '/quality', label: 'Data Quality Center', icon: 'quality', section: 'Overview' },
   { to: '/inventory', label: 'Inventory Intelligence', icon: 'inventory', section: 'Analysis' },
