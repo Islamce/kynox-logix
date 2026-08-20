@@ -6,7 +6,7 @@
     "doNotEdit": true,
     "generator": "kaaf",
     "generatorVersion": "0.7.0",
-    "inputDigest": "0c394c5d49ec9b7e9deb4ab45c75907afc3ae5da7a89709ea7101e8fbf79ba9d",
+    "inputDigest": "326901362992d5349e425f893089fc9683a71d19a20a47eab433a262f64778e9",
     "provenanceNote": "Generated from the declared kaaf.repo.json and kaaf.module.json manifests. No wall-clock time or commit SHA is embedded: both would break byte-identical regeneration. Use git history for when and from which commit.",
     "schemaVersion": "1.0.0"
   },
@@ -15,72 +15,29 @@
   "confidenceReason": "Declared and corroborated by 5 discovered code file(s).",
   "declared": true,
   "declaredConfidence": "verified",
-  "dependedOnBy": [
-    "analytics-api"
-  ],
-  "dependsOn": [
-    "analytics-shared-types"
-  ],
+  "dependedOnBy": ["analytics-api"],
+  "dependsOn": ["analytics-shared-types"],
   "discovery": {
-    "codeFiles": [
-      "packages/ai-engine/src/agents.ts",
-      "packages/ai-engine/src/ai.test.ts",
-      "packages/ai-engine/src/index.ts",
-      "packages/ai-engine/src/orchestrator.ts",
-      "packages/ai-engine/src/providers.ts"
-    ],
+    "codeFiles": ["packages/ai-engine/src/agents.ts", "packages/ai-engine/src/ai.test.ts", "packages/ai-engine/src/index.ts", "packages/ai-engine/src/orchestrator.ts", "packages/ai-engine/src/providers.ts"],
     "discovered": true,
     "entryPoints": [],
-    "languages": [
-      "json",
-      "typescript"
-    ],
+    "languages": ["json", "typescript"],
     "parseErrors": [],
     "publicSymbols": [],
-    "sourceFiles": [
-      "packages/ai-engine/kaaf.module.json",
-      "packages/ai-engine/package.json",
-      "packages/ai-engine/src/agents.ts",
-      "packages/ai-engine/src/ai.test.ts",
-      "packages/ai-engine/src/index.ts",
-      "packages/ai-engine/src/orchestrator.ts",
-      "packages/ai-engine/src/providers.ts",
-      "packages/ai-engine/tsconfig.json"
-    ]
+    "sourceFiles": ["packages/ai-engine/kaaf.module.json", "packages/ai-engine/package.json", "packages/ai-engine/src/agents.ts", "packages/ai-engine/src/ai.test.ts", "packages/ai-engine/src/index.ts", "packages/ai-engine/src/orchestrator.ts", "packages/ai-engine/src/providers.ts", "packages/ai-engine/tsconfig.json"]
   },
   "driftFindings": [],
   "externalIntegrations": [
-    {
-      "criticality": "optional",
-      "kind": "ai-provider",
-      "name": "Anthropic API",
-      "onUnavailable": "AI agents return a controlled error; every non-AI analytics surface is unaffected."
-    },
-    {
-      "criticality": "optional",
-      "kind": "ai-provider",
-      "name": "OpenAI API",
-      "onUnavailable": "AI agents return a controlled error; every non-AI analytics surface is unaffected."
-    }
+    {"criticality": "optional", "kind": "ai-provider", "name": "Anthropic API", "onUnavailable": "AI agents return a controlled error; every non-AI analytics surface is unaffected."},
+    {"criticality": "optional", "kind": "ai-provider", "name": "OpenAI API", "onUnavailable": "AI agents return a controlled error; every non-AI analytics surface is unaffected."}
   ],
   "id": "analytics-ai-engine",
-  "ownedEntities": [
-    "ai-agent",
-    "ai-usage-record",
-    "evidence-package",
-    "provider-adapter"
-  ],
+  "ownedEntities": ["ai-agent", "ai-usage-record", "evidence-package", "provider-adapter"],
   "owner": "AI Engineering",
   "path": "packages/ai-engine",
   "permissions": [],
-  "publicEntryPoints": [
-    "packages/ai-engine/package.json",
-    "packages/ai-engine/src/index.ts"
-  ],
+  "publicEntryPoints": ["packages/ai-engine/package.json", "packages/ai-engine/src/index.ts"],
   "purpose": "Run the documented analytics agents over evidence packages built from verified data, behind a provider abstraction so no single vendor is load-bearing.",
-  "readNext": [
-    "packages/ai-engine/package.json",
-    "packages/ai-engine/src/index.ts"
-  ],
+  "readNext": ["packages/ai-engine/package.json", "packages/ai-engine/src/index.ts"],
   "sourceManifest": "packages/ai-engine/kaaf.module.json"
 }
