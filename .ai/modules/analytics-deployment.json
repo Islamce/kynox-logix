@@ -18,23 +18,64 @@
   "dependedOnBy": [],
   "dependsOn": [],
   "discovery": {
-    "codeFiles": ["scripts/deployment/backup-db.sh", "scripts/deployment/deploy-staging.sh", "scripts/deployment/lib.sh", "scripts/deployment/preflight.sh", "scripts/deployment/restore-db.sh", "scripts/deployment/rollback.sh", "scripts/deployment/smoke-test.sh"],
+    "codeFiles": [
+      "scripts/deployment/backup-db.sh",
+      "scripts/deployment/deploy-staging.sh",
+      "scripts/deployment/lib.sh",
+      "scripts/deployment/preflight.sh",
+      "scripts/deployment/restore-db.sh",
+      "scripts/deployment/rollback.sh",
+      "scripts/deployment/smoke-test.sh"
+    ],
     "discovered": true,
-    "entryPoints": ["scripts/deployment/backup-db.sh", "scripts/deployment/deploy-staging.sh", "scripts/deployment/lib.sh", "scripts/deployment/preflight.sh", "scripts/deployment/restore-db.sh", "scripts/deployment/rollback.sh", "scripts/deployment/smoke-test.sh"],
-    "languages": ["json", "shell"],
+    "entryPoints": [
+      "scripts/deployment/backup-db.sh",
+      "scripts/deployment/deploy-staging.sh",
+      "scripts/deployment/lib.sh",
+      "scripts/deployment/preflight.sh",
+      "scripts/deployment/restore-db.sh",
+      "scripts/deployment/rollback.sh",
+      "scripts/deployment/smoke-test.sh"
+    ],
+    "languages": [
+      "json",
+      "shell"
+    ],
     "parseErrors": [],
     "publicSymbols": [],
-    "sourceFiles": ["scripts/deployment/backup-db.sh", "scripts/deployment/deploy-staging.sh", "scripts/deployment/kaaf.module.json", "scripts/deployment/lib.sh", "scripts/deployment/preflight.sh", "scripts/deployment/restore-db.sh", "scripts/deployment/rollback.sh", "scripts/deployment/smoke-test.sh"]
+    "sourceFiles": [
+      "scripts/deployment/backup-db.sh",
+      "scripts/deployment/deploy-staging.sh",
+      "scripts/deployment/kaaf.module.json",
+      "scripts/deployment/lib.sh",
+      "scripts/deployment/preflight.sh",
+      "scripts/deployment/restore-db.sh",
+      "scripts/deployment/rollback.sh",
+      "scripts/deployment/smoke-test.sh"
+    ]
   },
   "driftFindings": [],
   "externalIntegrations": [],
   "id": "analytics-deployment",
-  "ownedEntities": ["database-backup", "deployment-procedure", "rollback-procedure", "smoke-test"],
+  "ownedEntities": [
+    "database-backup",
+    "deployment-procedure",
+    "rollback-procedure",
+    "smoke-test"
+  ],
   "owner": "DevOps",
   "path": "scripts/deployment",
   "permissions": [],
-  "publicEntryPoints": ["scripts/deployment/deploy-staging.sh", "scripts/deployment/preflight.sh", "scripts/deployment/rollback.sh"],
+  "publicEntryPoints": [
+    "scripts/deployment/deploy-staging.sh",
+    "scripts/deployment/preflight.sh",
+    "scripts/deployment/rollback.sh"
+  ],
   "purpose": "Carry out staged deployment and its safety operations — preflight checks, database backup and restore, rollback, and post-deploy smoke tests. Executing any of these against a real environment is a protected action requiring approval.",
-  "readNext": ["scripts/deployment/deploy-staging.sh", "scripts/deployment/preflight.sh", "scripts/deployment/rollback.sh"],
+  "readNext": [
+    "scripts/deployment/deploy-staging.sh",
+    "scripts/deployment/preflight.sh",
+    "scripts/deployment/rollback.sh"
+  ],
   "sourceManifest": "scripts/deployment/kaaf.module.json"
 }
