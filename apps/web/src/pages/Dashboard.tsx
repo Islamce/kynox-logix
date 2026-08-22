@@ -53,6 +53,8 @@ export function DashboardPage() {
 
   const k = data.kpis;
   const health = k.healthScore ?? null;
+  const healthStatus: 'good' | 'warning' | 'critical' | 'neutral' =
+    health === null ? 'neutral' : health >= 75 ? 'good' : health >= 50 ? 'warning' : 'critical';
 
   return (
     <div className="space-y-4">
@@ -65,8 +67,10 @@ export function DashboardPage() {
         <p key={n} className="text-sm bg-info-soft border border-info/30 text-body rounded-lg px-3 py-2">{n}</p>
       ))}
 
-      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-3">
-        <Kpi name="Total inventory value" value={k.totalValue} status="neutral"
+      <HealthHero health={health} status={healthStatus} explanation={data.healthExplanation} kpis={k} />
+
+      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-2.5">
+        <Kpi name="Total value" value={k.totalValue} status="neutral"
           definition="Sum of stock line values in the selected dataset" formula="Σ line value" />
         <Kpi name="Materials" value={k.totalMaterials} status="neutral"
           definition="Distinct materials with stock lines" />
@@ -77,22 +81,9 @@ export function DashboardPage() {
           formula="last issue ≥ configured slow-moving days" />
         <Kpi name="Non-moving value" value={k.nonMovingValue} status={(k.nonMovingValue ?? 0) > 0 ? 'critical' : 'good'}
           definition="Stock value of materials with no issue within the non-moving threshold" />
-        <Kpi name="Excess value" value={k.excessValue} status={(k.excessValue ?? 0) > 0 ? 'warning' : 'good'}
-          definition="Stock value above the configured coverage target" formula="stock − daily demand × coverage days" />
-        <Kpi name="Shortage-risk materials" value={k.shortageMaterials}
-          status={(k.criticalShortages ?? 0) > 0 ? 'critical' : (k.shortageMaterials ?? 0) > 0 ? 'warning' : 'good'}
-          definition="Materials below safety stock / reorder point, or with negative availability" />
-        <Kpi name="Critical shortages" value={k.criticalShortages} status={(k.criticalShortages ?? 0) > 0 ? 'critical' : 'good'}
-          definition="Negative availability or uncovered reservations" />
-        <Kpi name="Inventory health" value={health} unit="/100"
-          status={health === null ? 'neutral' : health >= 75 ? 'good' : health >= 50 ? 'warning' : 'critical'}
-          definition="Weighted index across availability, excess, obsolescence, aging, turnover and data quality"
-          formula={data.healthExplanation.join(' | ')} />
-        <Kpi name="Data quality" value={k.dataQualityScore} unit="/100"
-          status={(k.dataQualityScore ?? 0) >= 90 ? 'good' : 'warning'}
-          definition="Overall data-quality score of the dataset at creation time" />
       </div>
 
+      <SectionHeading label="Where the exposure is" />
       <div className="grid lg:grid-cols-2 gap-4">
         <Card title="Inventory aging" subtitle="Value by days since last movement">
           <Chart option={{
@@ -156,10 +147,107 @@ export function DashboardPage() {
         </Card>
       </div>
 
+      <SectionHeading label="Direction of travel" />
       <TrendCard stockDatasetId={ws.stockDatasetId} />
 
-      {ws.movementsDatasetId && <MovementCategoriesCard movementsDatasetId={ws.movementsDatasetId} />}
+      {ws.movementsDatasetId && (
+        <>
+          <SectionHeading label="Transaction detail" hint="reference, not headline" />
+          <MovementCategoriesCard movementsDatasetId={ws.movementsDatasetId} />
+        </>
+      )}
     </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Quiet section divider used to group the dashboard into a scannable
+// narrative (exposure → trend → detail) instead of one undifferentiated
+// stack of cards.
+// ---------------------------------------------------------------------------
+
+function SectionHeading({ label, hint }: { label: string; hint?: string }) {
+  return (
+    <div className="flex items-center gap-2 pt-1">
+      <h2 className="text-[11px] font-bold uppercase tracking-wider text-muted whitespace-nowrap">
+        {label}
+        {hint && <span className="ms-1.5 font-normal normal-case tracking-normal text-subtle">— {hint}</span>}
+      </h2>
+      <span className="flex-1 h-px bg-line" aria-hidden />
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Health hero: pulls the single most important read (inventory health) out
+// of the flat KPI grid and pairs it with its biggest drivers — excess,
+// shortage risk, critical shortages, data quality — so the page answers
+// "is inventory healthy?" before anything else competes for attention.
+// The remaining KPIs move to a quieter secondary row below.
+// ---------------------------------------------------------------------------
+
+function HealthHero({ health, status, explanation, kpis }: {
+  health: number | null;
+  status: 'good' | 'warning' | 'critical' | 'neutral';
+  explanation: string[];
+  kpis: Record<string, number | null>;
+}) {
+  const headline = health === null
+    ? 'Inventory health is not yet evaluable'
+    : health >= 75 ? 'Inventory is broadly healthy'
+    : health >= 50 ? 'Inventory needs focused attention'
+    : 'Inventory exposure requires action';
+  const ringColor = { good: '#12a150', warning: '#e0930d', critical: '#d83a3a', neutral: '#97a4b6' }[status];
+  const circumference = 2 * Math.PI * 32;
+  const filled = health === null ? 0 : Math.max(0, Math.min(100, health));
+  const dashoffset = circumference * (1 - filled / 100);
+
+  return (
+    <section className="grid lg:grid-cols-[1.3fr_1fr] rounded-2xl overflow-hidden border border-line shadow-[var(--kx-shadow-sm)]">
+      <div
+        className="relative overflow-hidden p-5 sm:p-6 text-white"
+        style={{ background: 'linear-gradient(135deg,var(--kx-sidebar-bg),var(--kx-neutral-850))' }}
+      >
+        <div className="absolute -right-12 -top-16 h-48 w-48 rounded-full border border-white/10" aria-hidden />
+        <p className="relative text-[11px] uppercase tracking-[0.18em] text-cyan-200/80 font-semibold">Inventory health signal</p>
+        <h2 className="relative mt-2 max-w-md text-xl sm:text-2xl font-semibold tracking-tight">{headline}</h2>
+        <p className="relative mt-2 max-w-sm text-sm leading-6 text-slate-300">
+          Weighted index across availability, excess, obsolescence, aging, turnover and data quality.
+        </p>
+        <div className="relative mt-4 flex items-center gap-4">
+          <div className="relative shrink-0" style={{ width: 76, height: 76 }}>
+            <svg width={76} height={76} viewBox="0 0 76 76" className="-rotate-90">
+              <circle cx={38} cy={38} r={32} fill="none" stroke="rgba(255,255,255,.14)" strokeWidth={8} />
+              {health !== null && (
+                <circle
+                  cx={38} cy={38} r={32} fill="none" stroke={ringColor} strokeWidth={8} strokeLinecap="round"
+                  strokeDasharray={circumference} strokeDashoffset={dashoffset}
+                />
+              )}
+            </svg>
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <strong className="text-lg leading-none tabular-nums">{health === null ? '—' : health}</strong>
+              <small className="text-[8.5px] text-slate-400">/ 100</small>
+            </div>
+          </div>
+          <p className="text-[11px] leading-5 text-slate-400 max-w-[15rem]">
+            {explanation.length ? explanation[0] : 'Definition and formula details are available from the KPI explanation.'}
+          </p>
+        </div>
+      </div>
+      <div className="bg-surface p-4 sm:p-5 grid grid-cols-2 gap-2.5">
+        <Kpi name="Excess value" value={kpis.excessValue} status={(kpis.excessValue ?? 0) > 0 ? 'warning' : 'good'}
+          definition="Stock value above the configured coverage target" formula="stock − daily demand × coverage days" />
+        <Kpi name="Shortage-risk materials" value={kpis.shortageMaterials}
+          status={(kpis.criticalShortages ?? 0) > 0 ? 'critical' : (kpis.shortageMaterials ?? 0) > 0 ? 'warning' : 'good'}
+          definition="Materials below safety stock / reorder point, or with negative availability" />
+        <Kpi name="Critical shortages" value={kpis.criticalShortages} status={(kpis.criticalShortages ?? 0) > 0 ? 'critical' : 'good'}
+          definition="Negative availability or uncovered reservations" />
+        <Kpi name="Data quality" value={kpis.dataQualityScore} unit="/100"
+          status={(kpis.dataQualityScore ?? 0) >= 90 ? 'good' : 'warning'}
+          definition="Overall data-quality score of the dataset at creation time" />
+      </div>
+    </section>
   );
 }
 
